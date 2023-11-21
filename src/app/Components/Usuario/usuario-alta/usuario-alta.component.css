@@ -1,0 +1,34 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.mi-componente-background {
+  background-color: #f2b705;
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* --------------------PANTALLA CELULARES--------------------*/
+@media (min-width: 0px) {
+  .mi-componente-background {
+    background-color: #f2b705;
+  }
+  .mat-card-style {
+    background-color: white;
+  }
+  .btn-registrar-padding {
+    margin-right: 5px;
+  }
+}
+/* --------------------PANTALLA CELULARES--------------------*/
+
+/* --------------------PANTALLA PARA MONITORES-------------------- */
+@media (min-width: 1024px) {
+  .mi-componente-background {
+    background-color: #f2b705;
+  }
+}
+/* --------------------PANTALLA PARA MONITORES-------------------- */

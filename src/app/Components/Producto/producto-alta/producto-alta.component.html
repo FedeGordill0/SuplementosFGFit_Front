@@ -1,0 +1,76 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Registrar Producto</h1>
+      <form [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput required type="text" name="nombre" id="nombre" formControlName="nombre">
+        </mat-form-field>
+        <div *ngIf="validarNombre">
+          <p class="error-message">El campo no puede superar los 100 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Descripción</mat-label>
+          <input matInput required type="text" name="descripcion" id="descripcion" formControlName="descripcion">
+        </mat-form-field>
+        <div *ngIf="validarDescripcion">
+          <p class="error-message">El campo no puede superar los 100 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Marca</mat-label>
+          <input matInput required type="text" name="marca" id="marca" formControlName="marca">
+        </mat-form-field>
+        <div *ngIf="validarMarca">
+          <p class="error-message">El campo no puede superar los 100 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Imagen</mat-label>
+          <input matInput required type="text" name="imagen" id="imagen" formControlName="imagen">
+        </mat-form-field>
+        <div *ngIf="validarImagen">
+          <p class="error-message">El campo no puede superar los 1000 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Categoría</mat-label>
+          <mat-select formControlName="idCategoria" name="categoria">
+            <mat-option *ngFor="let categoria of listadoCategorias" [value]="categoria.idCategoria">
+              {{categoria.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Unidad de Medida</mat-label>
+          <mat-select formControlName="idUnidadMedida" name="unidadMedida">
+            <mat-option *ngFor="let unidadMedida of listadoUnidades" [value]="unidadMedida.idUnidadMedida">
+              {{unidadMedida.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-form-field">
+          <mat-label>Fecha de Vencimiento</mat-label>
+          <input matInput [matDatepicker]="datepicker" formControlName="fechaVencimiento" name="fechaVencimiento">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+      </form>
+      <br>
+      <div>
+        <button mat-button class="btn-stepper-hover-guardar" (click)="guardar()">Guardar</button>
+        <button mat-button class="btn-stepper-hover-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+</div>

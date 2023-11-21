@@ -1,0 +1,311 @@
+<div *ngIf="usuario==='admin'">
+  <div class="container-fluid">
+    <div
+      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+
+      <div>
+        <h1 style="background-color: white;padding: 5px;text-align: center;">Productos</h1>
+      </div>
+
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="filtro($event)" #input>
+      </mat-form-field>
+
+      <div *ngIf="tabla_M" class="display-tablaMobile">
+        <div>
+          <button (click)="irNuevoProducto()" mat-mini-fab color="primary" style="margin-right: 7px;"
+            aria-label="Example icon button with a menu icon">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <br>
+        <table mat-table [dataSource]="dataSourceMobile" multiTemplateDataRows class="mat-elevation-z8">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayMobile">
+            <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+            <td mat-cell *matCellDef="let producto"> {{producto[column]}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let producto">
+              <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === producto ? null : producto); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== producto">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === producto">keyboard_arrow_up</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let producto" [attr.colspan]="columnsToDisplayWithExpand.length">
+              <div class="example-element-detail"
+                [@detailExpand]="producto == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+
+                  <div class="example-element-descripcion"><img [src]="producto.imagen"
+                      style="width: 95px;height: 95px;"> </div>
+                </div>
+                <div class="example-element-description">
+                  {{producto.descripcion}}
+                  <br>
+                  <div style="display: flex;">
+                    <button style="margin-right: 6px;" [routerLink]="['/producto/modificar/' +producto.idProducto]"
+                      mat-mini-fab color="primary" style="margin-right: 7px;"
+                      aria-label="Example icon button with a menu icon">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+
+
+                    <app-producto-baja [producto]="producto" (onEliminar)="actualizarListado()"></app-producto-baja>
+                  </div>
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+          <tr mat-row *matRowDef="let producto; columns: columnsToDisplayWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === producto"
+            (click)="expandedElement = expandedElement === producto ? null : producto">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="tabla_PC" class="display-tablaPC">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+          <ng-container matColumnDef="nombre">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.nombre}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Descripción</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.descripcion}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="marca">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Marca</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.marca}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="imagen">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Imagen</th>
+            <td mat-cell *matCellDef="let producto"> <img [src]="producto.imagen" style="width: 60px;height: 70px;">
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="idCategoria">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Categoría</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.idCategoriaNavigation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="idUnidadMedida">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Unidad de Medida</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.idUnidadMedidaNavigation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaVencimiento">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Fecha de Vencimiento</th>
+            <td mat-cell *matCellDef="let producto">
+              {{producto.fechaVencimiento | date:'dd/MM/yyyy'}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="estadoProducto">
+            <th mat-header-cell *matHeaderCellDef>Estado de Producto</th>
+            <td mat-cell *matCellDef="let producto">
+              <p>
+                {{ verificarVencimiento(producto) ? "El producto se está aproximando a su fecha de vencimiento!" :
+                "El producto es apto para consumo." }}
+              </p>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let producto">
+              <div style="display: flex; flex-direction: row;">
+                <button style="margin-right: 6px;" [routerLink]="['/producto/modificar/' +producto.idProducto]"
+                  mat-mini-fab color="primary" style="margin-right: 7px;"
+                  aria-label="Example icon button with a menu icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+
+
+                <app-producto-baja [producto]="producto" (onEliminar)="actualizarListado()"></app-producto-baja>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="a">
+            <th mat-header-cell *matHeaderCellDef>
+              <button (click)="irNuevoProducto()" style="margin-right: 6px;" mat-mini-fab color="primary"
+                style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
+                <mat-icon>add</mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let producto"></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div class="width-paginator">
+          <mat-paginator class="paginator-end" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn-stepper-hover" mat-button (click)="volver()" style="margin-right: 7px;">
+          Volver a Inicio
+        </button>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="usuario!=='admin'">
+  <div class="container-fluid">
+    <div
+      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+
+      <div>
+        <h1 style="background-color: white;padding: 5px;text-align: center;">Productos</h1>
+      </div>
+
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="filtroUsuario($event)" #input>
+      </mat-form-field>
+
+      <div *ngIf="tabla_M" class="display-tablaMobile">
+
+        <br>
+        <table mat-table [dataSource]="dataSourceMobile" multiTemplateDataRows class="mat-elevation-z8">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayMobile">
+            <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+            <td mat-cell *matCellDef="let producto"> {{producto[column]}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let producto">
+              <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === producto ? null : producto); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== producto">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === producto">keyboard_arrow_up</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let producto" [attr.colspan]="columnsToDisplayWithExpand.length">
+              <div class="example-element-detail"
+                [@detailExpand]="producto == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+
+                  <div class="example-element-descripcion"><img [src]="producto.imagen"
+                      style="width: 95px;height: 95px;"> </div>
+                </div>
+                <div class="example-element-description">
+                  {{producto.descripcion}}
+                  <br>
+
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+          <tr mat-row *matRowDef="let producto; columns: columnsToDisplayWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === producto"
+            (click)="expandedElement = expandedElement === producto ? null : producto">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="tabla_PC" class="display-tablaPC">
+        <table mat-table [dataSource]="dataSourceUsuario" matSort class="mat-elevation-z1">
+          <ng-container matColumnDef="nombre">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.nombre}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Descripción</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.descripcion}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="marca">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Marca</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.marca}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="imagen">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Imagen</th>
+            <td mat-cell *matCellDef="let producto"> <img [src]="producto.imagen" style="width: 60px;height: 70px;">
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="idCategoria">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Categoría</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.idCategoriaNavigation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="idUnidadMedida">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Unidad de Medida</th>
+            <td mat-cell *matCellDef="let producto"> {{producto.idUnidadMedidaNavigation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaVencimiento">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Fecha de Vencimiento</th>
+            <td mat-cell *matCellDef="let producto">
+              {{producto.fechaVencimiento | date:'dd/MM/yyyy'}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="estadoProducto">
+            <th mat-header-cell *matHeaderCellDef>Estado de Producto</th>
+            <td mat-cell *matCellDef="let producto">
+              <p>
+                {{ verificarVencimiento(producto) ? "El producto se está aproximando a su fecha de vencimiento!" :
+                "El producto es apto para consumo." }}
+              </p>
+            </td>
+          </ng-container>
+
+
+
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsUsuario"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsUsuario;"></tr>
+        </table>
+        <div class="width-paginator">
+          <mat-paginator class="paginator-end" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn-stepper-hover" mat-button (click)="volver()" style="margin-right: 7px;">
+          Volver a Inicio
+        </button>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>

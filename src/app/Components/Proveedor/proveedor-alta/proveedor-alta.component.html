@@ -1,0 +1,98 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Registrar Proveedor</h1>
+      <form [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput required type="text" name="nombre" id="nombre" formControlName="nombre">
+        </mat-form-field>
+        <div *ngIf="validarNombre">
+          <p class="error-message">El campo no puede superar los 50 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Dirección</mat-label>
+          <input matInput required type="text" name="direccion" id="direccion" formControlName="direccion">
+        </mat-form-field>
+        <div *ngIf="validarDireccion">
+          <p class="error-message">El campo no puede superar los 50 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Teléfono</mat-label>
+          <input matInput required type="text" name="telefono" id="telefono" formControlName="telefono">
+        </mat-form-field>
+        <div *ngIf="validarTelefono">
+          <p class="error-message">El campo no puede superar los 50 caracteres</p>
+        </div>
+        <div *ngIf="validarTelefono2">
+          <p class="error-message">Este campo únicamente acepta valores numéricos</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>CUIT</mat-label>
+          <input matInput required type="text" name="cuit" id="cuit" formControlName="cuit">
+        </mat-form-field>
+        <div *ngIf="validarCuit">
+          <p class="error-message">El campo no puede superar los 50 caracteres</p>
+        </div>
+        <div *ngIf="validarCuit2">
+          <p class="error-message">Este campo únicamente acepta valores numéricos</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput required type="text" name="email" id="email" formControlName="email">
+        </mat-form-field>
+        <div *ngIf="validarEmail">
+          <p class="error-message">El campo no puede superar los 100 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Productos</mat-label>
+          <mat-select formControlName="productosIds" name="productosIds" multiple>
+            <mat-option *ngFor="let producto of listadoProductos" [value]="producto.idProducto">
+              {{producto.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div formArrayName="productosPrecios" *ngIf="formulario.get('productosIds')?.value.length > 0">
+          <div *ngFor="let control of precios.controls; let i = index">
+            <div [formGroupName]="i">
+              <mat-form-field appearance="fill">
+                <mat-label>Precio</mat-label>
+                <input matInput type="number" formControlName="precio">
+              </mat-form-field>
+              <div *ngIf="validarPrecio">
+                <p class="error-message">El campo no puede superar los 100 caracteres</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Forma de Envío</mat-label>
+          <mat-select formControlName="formasEnvioIds" name="formasEnvioIds" multiple>
+            <mat-option *ngFor="let formaEnvio of listadoFormasEnvio" [value]="formaEnvio.idFormaEnvio">
+              {{formaEnvio.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+          <mat-label>Forma de Pago</mat-label>
+          <mat-select formControlName="formasPagoIds" name="formasPagoIds" multiple>
+            <mat-option *ngFor="let formaPago of listadoFormasPago" [value]="formaPago.idFormaPago">
+              {{formaPago.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <br>
+      <div>
+        <button mat-button class="btn-stepper-hover-guardar" (click)="guardar()">Guardar</button>
+        <button mat-button class="btn-stepper-hover-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,25 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Registrar forma de pago</h1>
+      <form [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Forma de pago</mat-label>
+          <mat-select formControlName="idFormaPago" name="formaPago">
+            <mat-option *ngFor="let formaPago of listadoFormasPago" [value]="formaPago.idFormaPago">
+              {{formaPago.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+        <br>
+      </form>
+      <div>
+        <button mat-button class="btn-stepper-hover-guardar" (click)="guardar()">Guardar</button>
+        <button mat-button class="btn-stepper-hover-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

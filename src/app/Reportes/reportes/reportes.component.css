@@ -1,0 +1,18 @@
+.yourParentDivCssClass ::ng-deep .mat-step-header .mat-step-icon {
+  display: none !important;
+}
+table {
+  width: 50vw;
+}
+.mat-sort-header-container {
+  align-items: center;
+}
+.width-paginator {
+  width: 50vw;
+}
+.btn-stepper-hover:hover {
+  margin-right: 6px;
+  background-color: white;
+  color: #f2b705;
+  transition: background-color 0.3s ease-in-out;
+}

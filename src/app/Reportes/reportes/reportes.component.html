@@ -1,0 +1,92 @@
+<div style="
+margin: 5% auto;
+display: flex;
+flex-direction: column;
+justify-content: center;">
+  <div class="yourParentDivCssClass">
+    <mat-stepper #stepper>
+      <mat-step>
+        <ng-template matStepLabel>Monto total por rango de fechas</ng-template>
+        <div style="display: flex; flex-direction: column;justify-content: center;align-items: center;">
+          <div style="display: none; text-align: center;" #monto>
+            <h1>Monto total <br>{{acc | currency}}</h1>
+          </div>
+          <br>
+          <mat-form-field appearance="fill" class="example-form-field" [formGroup]="campaignOne">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="rangePicker">
+              <input matStartDate placeholder="Start date" formControlName="start">
+              <input matEndDate placeholder="End date" formControlName="end">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #rangePicker>
+              <mat-date-range-picker-actions>
+                <button mat-button matDateRangePickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDateRangePickerApply
+                  (click)="filtroMontoFechas()">Apply</button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Productos por proveedores</ng-template>
+        <div style="display: flex; flex-direction: column;justify-content: center;align-items: center;">
+          <div style="display:flex; flex-direction: row;align-items: center;">
+            <mat-form-field>
+              <mat-label>Buscar producto por proveedor</mat-label>
+              <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+          </div>
+          <table mat-table [dataSource]="dataSourcePP" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="Producto">
+              <th mat-sort-header mat-header-cell *matHeaderCellDef>Producto</th>
+              <td mat-cell *matCellDef="let pp"> {{pp.idProductoNavigation?.nombre}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Proveedor">
+              <th mat-sort-header mat-header-cell *matHeaderCellDef>Proveedor</th>
+              <td mat-cell *matCellDef="let pp"> {{pp.idProveedorNavigation?.nombre}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Precio">
+              <th mat-sort-header mat-header-cell *matHeaderCellDef>Precio</th>
+              <td mat-cell *matCellDef="let pp"> {{pp.precio | currency}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsPP"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsPP;"></tr>
+          </table>
+          <div class="width-paginator">
+            <mat-paginator class="paginator-end" [length]="100" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+            </mat-paginator>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <div style="display: flex; flex-direction: column;justify-content: center;align-items: center;">
+          <ng-template matStepLabel>Porcentaje de estado de órdenes</ng-template>
+
+
+          <div style="width: 800px; height: 400px;">
+            <canvas baseChart [data]="barChartData2" [options]="barChartOptions2" [plugins]="barChartPlugins2"
+              [legend]="barChartLegend2" [type]="'bar'">
+            </canvas>
+          </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
+    <br>
+    <div style="display: flex; flex-direction: column;justify-content: center;align-items: center;">
+      <button class="btn-stepper-hover" mat-button (click)="cancelar()">
+        Volver a Inicio
+      </button>
+    </div>
+  </div>
+
+</div>

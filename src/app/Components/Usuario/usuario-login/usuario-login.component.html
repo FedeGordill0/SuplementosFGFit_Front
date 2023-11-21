@@ -1,0 +1,34 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex; flex-direction: column;align-items: center; justify-content: center;">
+      <div>
+        <img src="../../../../assets/logop.png" style="width: 130px;height: 120px;">
+      </div>
+      <br>
+
+      <form style="text-align: center;" [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Usuario</mat-label>
+          <input required matInput type="text" name="email" id="email" formControlName="email">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" style="width: 85%;">
+          <mat-label>Contraseña</mat-label>
+          <input required matInput type="password" name="email" id="email" formControlName="password"
+            [type]="hide ? 'text' : 'password'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <br>
+        <button mat-flat-button color="primary" (click)="login(loginDto)">Ingresar</button>
+        <br> <br>
+        <div>
+          <a style="color: #3F51B5;border: none;text-decoration: none;" [routerLink]="['/registrarUsuario/']">¿No tienes
+            una cuenta? Regístrate</a>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

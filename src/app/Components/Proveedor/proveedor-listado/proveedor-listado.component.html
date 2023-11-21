@@ -1,0 +1,312 @@
+<div *ngIf="usuario==='admin'">
+  <div class="container-fluid">
+    <div
+      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+
+      <div>
+        <h1 style="background-color: white;padding: 5px;text-align: center;">Proveedores</h1>
+      </div>
+
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="filtro($event)" #input>
+      </mat-form-field>
+
+      <div *ngIf="tabla_M" class="display-tablaMobile">
+        <div>
+          <button (click)="irNuevoProveedor()" mat-mini-fab color="primary" style="margin-right: 7px;"
+            aria-label="Example icon button with a menu icon">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <br>
+        <table mat-table [dataSource]="dataSourceMobile" multiTemplateDataRows class="mat-elevation-z8 tabla-mobile">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayMobile">
+            <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor[column]}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let proveedor">
+              <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === proveedor ? null : proveedor); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== proveedor">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === proveedor">keyboard_arrow_up</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let proveedor" [attr.colspan]="columnsToDisplayWithExpand.length">
+              <div class="example-element-detail"
+                [@detailExpand]="proveedor == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+                  <button mat-button
+                    [routerLink]="['/proveedor/productos/listado/'+proveedor.idProveedor]">Productos</button>
+                  <button mat-button [routerLink]="['/proveedor/formasEnvio/listado/'+proveedor.idProveedor]">Formas de
+                    envío</button>
+                  <button mat-button [routerLink]="['/proveedor/formasPago/listado/'+proveedor.idProveedor]">Formas de
+                    pago</button>
+                </div>
+                <div class="example-element-description">
+                  <div class="example-element-descripcion">{{proveedor.direccion}}</div>
+                  <div class="example-element-descripcion">{{proveedor.cuit}}</div>
+                  <div class="example-element-descripcion">{{proveedor.email}}</div>
+                  <br>
+                  <div style="display: flex;">
+                    <button style="margin-right: 6px;" [routerLink]="['/proveedor/modificar/' +proveedor.idProveedor]"
+                      mat-mini-fab color="primary" style="margin-right: 7px;"
+                      aria-label="Example icon button with a menu icon">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <app-proveedor-baja [proveedor]="proveedor" (onEliminar)="actualizarListado()"></app-proveedor-baja>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+          <tr mat-row *matRowDef="let producto; columns: columnsToDisplayWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === producto"
+            (click)="expandedElement = expandedElement === producto ? null : producto">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="tabla_PC" class="display-tablaPC">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+          <ng-container matColumnDef="nombre">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.nombre}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="direccion">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Dirección</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.direccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="telefono">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Teléfono</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.telefono}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="cuit">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>CUIT</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.cuit}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="email">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.email}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="productosXproveedores">
+
+            <th mat-header-cell *matHeaderCellDef>Productos</th>
+            <td mat-cell *matCellDef="let proveedor">
+              <button mat-button [routerLink]="['/proveedor/productos/listado/'+proveedor.idProveedor]">Ver
+                Todos</button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="proveedoresXformaEnvios">
+            <th mat-header-cell *matHeaderCellDef>Formas de Envio</th>
+            <td mat-cell *matCellDef="let proveedor">
+              <button mat-button [routerLink]="['/proveedor/formasEnvio/listado/'+proveedor.idProveedor]">Ver
+                Todos</button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="proveedoresXformaPagos">
+            <th mat-header-cell *matHeaderCellDef>Formas de Pago</th>
+            <td mat-cell *matCellDef="let proveedor">
+              <button mat-button [routerLink]="['/proveedor/formasPago/listado/'+proveedor.idProveedor]">Ver
+                Todos</button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let proveedor">
+              <div style="display: flex; flex-direction: row;">
+                <button style="margin-right: 6px;" [routerLink]="['/proveedor/modificar/' + proveedor.idProveedor]"
+                  mat-mini-fab color="primary" style="margin-right: 7px;"
+                  aria-label="Example icon button with a menu icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <app-proveedor-baja [proveedor]="proveedor" (onEliminar)="actualizarListado()"></app-proveedor-baja>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="a">
+            <th mat-header-cell *matHeaderCellDef>
+              <button (click)="irNuevoProveedor()" style="margin-right: 6px;" mat-mini-fab color="primary"
+                style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
+                <mat-icon>add</mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let formaEnvio"></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div class="width-paginator">
+          <mat-paginator class="paginator-end" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+      <div>
+        <button class="btn-stepper-hover" mat-button (click)="volver()" style="margin-right: 7px;">
+          Volver a Inicio
+        </button>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
+
+<!-- ------------------------------------------------------- -->
+
+<div *ngIf="usuario!=='admin'">
+  <div class="container-fluid">
+    <div
+      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+
+      <div>
+        <h1 style="background-color: white;padding: 5px;text-align: center;">Proveedores</h1>
+      </div>
+
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="filtroUsuario($event)" #input>
+      </mat-form-field>
+
+      <div *ngIf="tabla_M" class="display-tablaMobile">
+
+        <br>
+        <table mat-table [dataSource]="dataSourceMobile" multiTemplateDataRows class="mat-elevation-z8 tabla-mobile">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayMobile">
+            <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor[column]}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let proveedor">
+              <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === proveedor ? null : proveedor); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== proveedor">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === proveedor">keyboard_arrow_up</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let proveedor" [attr.colspan]="columnsToDisplayWithExpand.length">
+              <div class="example-element-detail"
+                [@detailExpand]="proveedor == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+                  <button mat-button (click)="openDialogProducto(proveedor)">Productos</button>
+                  <button mat-button (click)="openDialogFormaEnvio(proveedor)">Formas de envío</button>
+                  <button mat-button (click)="openDialogFormaPago(proveedor)">Formas de pago</button>
+                </div>
+                <div class="example-element-description">
+                  <div class="example-element-descripcion">{{proveedor.direccion}}</div>
+                  <div class="example-element-descripcion">{{proveedor.cuit}}</div>
+                  <div class="example-element-descripcion">{{proveedor.email}}</div>
+                  <br>
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+          <tr mat-row *matRowDef="let producto; columns: columnsToDisplayWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === producto"
+            (click)="expandedElement = expandedElement === producto ? null : producto">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="tabla_PC" class="display-tablaPC">
+        <table mat-table [dataSource]="dataSourceUsuario" matSort class="mat-elevation-z1">
+          <ng-container matColumnDef="nombre">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.nombre}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="direccion">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Dirección</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.direccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="telefono">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Teléfono</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.telefono}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="cuit">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>CUIT</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.cuit}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="email">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let proveedor"> {{proveedor.email}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="productosXproveedores">
+
+            <th mat-header-cell *matHeaderCellDef>Productos</th>
+            <td mat-cell *matCellDef="let proveedor">
+              <button mat-button (click)="openDialogProducto(proveedor)">Ver Todos</button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="proveedoresXformaEnvios">
+            <th mat-header-cell *matHeaderCellDef>Formas de Envio</th>
+            <td mat-cell *matCellDef="let formaEnvio">
+              <button mat-button (click)="openDialogFormaEnvio(formaEnvio)">Ver Todos</button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="proveedoresXformaPagos">
+            <th mat-header-cell *matHeaderCellDef>Formas de Pago</th>
+            <td mat-cell *matCellDef="let formaPago">
+              <button mat-button (click)="openDialogFormaPago(formaPago)">Ver Todos</button>
+            </td>
+          </ng-container>
+
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsUsuario"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsUsuario;"></tr>
+        </table>
+        <div class="width-paginator">
+          <mat-paginator class="paginator-end" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+      <div>
+        <button class="btn-stepper-hover" mat-button (click)="volver()" style="margin-right: 7px;">
+          Volver a Inicio
+        </button>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>

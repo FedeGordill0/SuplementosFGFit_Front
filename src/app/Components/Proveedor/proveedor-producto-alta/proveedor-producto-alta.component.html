@@ -1,0 +1,28 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Registrar producto</h1>
+      <form [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Producto</mat-label>
+          <mat-select formControlName="idProducto" name="producto">
+            <mat-option *ngFor="let producto of listadoProductos" [value]="producto.idProducto">
+              {{producto.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Precio</mat-label>
+          <input matInput required type="text" name="precio" id="precio" formControlName="precio">
+        </mat-form-field>
+        <br>
+      </form>
+      <div>
+        <button mat-button class="btn-stepper-hover-guardar" (click)="guardar()">Guardar</button>
+        <button mat-button class="btn-stepper-hover-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

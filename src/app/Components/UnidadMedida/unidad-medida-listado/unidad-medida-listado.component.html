@@ -1,0 +1,225 @@
+<div *ngIf="usuario==='admin'">
+  <div class="container-fluid">
+    <div
+      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+
+      <div>
+        <h1 style="background-color: white;padding: 5px;text-align: center;">Unidades de Medida</h1>
+      </div>
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="filtro($event)" #input>
+      </mat-form-field>
+
+      <div *ngIf="tabla_M" class="display-tablaMobile">
+        <div>
+          <button (click)="irNuevaUnidadMedida()" mat-mini-fab color="primary" style="margin-right: 7px;"
+            aria-label="Example icon button with a menu icon">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <br>
+        <table mat-table [dataSource]="dataSourceMobile" multiTemplateDataRows class="mat-elevation-z8">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayMobile">
+            <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+            <td mat-cell *matCellDef="let unidadMedida"> {{unidadMedida[column]}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let unidadMedida">
+              <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === unidadMedida ? null : unidadMedida); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== unidadMedida">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === unidadMedida">keyboard_arrow_up</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let unidadMedida" [attr.colspan]="columnsToDisplayWithExpand.length">
+              <div class="example-element-detail"
+                [@detailExpand]="unidadMedida == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+
+                  <div class="example-element-descripcion">{{unidadMedida.nombre}} </div>
+                </div>
+                <div class="example-element-description">
+                  {{unidadMedida.descripcion}}
+                  <br>
+                  <div style="display: flex;">
+                    <button style="margin-right: 6px;"
+                      [routerLink]="['/unidadMedida/modificar/' +unidadMedida.idUnidadMedida]" mat-mini-fab
+                      color="primary" style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <app-unidad-medida-baja [unidad]="unidadMedida"
+                      (onEliminar)="actualizarListado()"></app-unidad-medida-baja>
+                  </div>
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+          <tr mat-row *matRowDef="let unidadMedida; columns: columnsToDisplayWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === unidadMedida"
+            (click)="expandedElement = expandedElement === unidadMedida ? null : unidadMedida">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="tabla_PC" class="display-tablaPC">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+          <ng-container matColumnDef="nombre">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let unidadMedida"> {{unidadMedida.nombre}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Descripción</th>
+            <td mat-cell *matCellDef="let unidadMedida"> {{unidadMedida.descripcion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let unidadMedida">
+              <div style="display: flex;">
+                <button style="margin-right: 6px;"
+                  [routerLink]="['/unidadMedida/modificar/' +unidadMedida.idUnidadMedida]" mat-mini-fab color="primary"
+                  style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+
+
+                <app-unidad-medida-baja [unidad]="unidadMedida"
+                  (onEliminar)="actualizarListado()"></app-unidad-medida-baja>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="a">
+            <th mat-header-cell *matHeaderCellDef>
+              <button (click)="irNuevaUnidadMedida()" style="margin-right: 6px;" mat-mini-fab color="primary"
+                style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
+                <mat-icon>add</mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let unidadMedida"></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div class="width-paginator">
+          <mat-paginator class="paginator-end" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+      <div>
+        <button class="btn-stepper-hover" mat-button (click)="volver()" style="margin-right: 7px;">
+          Volver a Inicio
+        </button>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
+
+<!-- -------------------------------------------- -->
+
+<div *ngIf="usuario!=='admin'">
+  <div class="container-fluid">
+    <div
+      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+
+      <div>
+        <h1 style="background-color: white;padding: 5px;text-align: center;">Unidades de Medida</h1>
+      </div>
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="filtroUsuario($event)" #input>
+      </mat-form-field>
+
+      <div *ngIf="tabla_M" class="display-tablaMobile">
+
+        <br>
+        <table mat-table [dataSource]="dataSourceMobile" multiTemplateDataRows class="mat-elevation-z8">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayMobile">
+            <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+            <td mat-cell *matCellDef="let unidadMedida"> {{unidadMedida[column]}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let unidadMedida">
+              <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === unidadMedida ? null : unidadMedida); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== unidadMedida">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === unidadMedida">keyboard_arrow_up</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let unidadMedida" [attr.colspan]="columnsToDisplayWithExpand.length">
+              <div class="example-element-detail"
+                [@detailExpand]="unidadMedida == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+
+                  <div class="example-element-descripcion">{{unidadMedida.nombre}} </div>
+                </div>
+                <div class="example-element-description">
+                  {{unidadMedida.descripcion}}
+                  <br>
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+          <tr mat-row *matRowDef="let unidadMedida; columns: columnsToDisplayWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === unidadMedida"
+            (click)="expandedElement = expandedElement === unidadMedida ? null : unidadMedida">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="tabla_PC" class="display-tablaPC">
+        <table mat-table [dataSource]="dataSourceUsuario" matSort class="mat-elevation-z1">
+          <ng-container matColumnDef="nombre">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let unidadMedida"> {{unidadMedida.nombre}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Descripción</th>
+            <td mat-cell *matCellDef="let unidadMedida"> {{unidadMedida.descripcion}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsUsuario"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsUsuario;"></tr>
+        </table>
+        <div class="width-paginator">
+          <mat-paginator class="paginator-end" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+      <div>
+        <button class="btn-stepper-hover" mat-button (click)="volver()" style="margin-right: 7px;">
+          Volver a Inicio
+        </button>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>

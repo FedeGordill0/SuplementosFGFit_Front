@@ -1,0 +1,102 @@
+<div
+  style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+
+  <div>
+    <h1 style="background-color: white;padding: 5px;text-align: center;">Formas de envío</h1>
+  </div>
+
+  <div *ngIf="tabla_M" class="display-tablaMobile">
+    <div>
+      <button (click)="altaFormaEnvio()" mat-mini-fab color="primary" style="margin-right: 7px;"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <br>
+    <table mat-table [dataSource]="dataSourceMobile" multiTemplateDataRows class="mat-elevation-z8">
+      <ng-container *ngFor="let column of columnsToDisplayMobile" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef>{{ column | titlecase }}</th>
+        <td mat-cell *matCellDef="let proveedorFormaEnvio">{{ proveedorFormaEnvio.idFormaEnvioNavigation?.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let proveedorFormaEnvio" [attr.colspan]="columnsToDisplayWithExpand.length">
+          <div class="example-element-detail">
+            <div>
+              <div class="example-element-descripcion">
+              </div>
+            </div>
+            <div class="example-element-description">
+              <div class="example-element-descripcion">{{proveedorFormaEnvio.idFormaEnvioNavigation?.descripcion}}</div>
+              Precio {{proveedorFormaEnvio.idFormaEnvioNavigation?.precio | currency}}
+              <br>
+              <div style="display: flex;">
+
+                <app-proveedor-forma-envio-eliminar [proveedorFormaEnvio]="proveedorFormaEnvio"
+                  (onEliminar)="actualizarListado()"></app-proveedor-forma-envio-eliminar>
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplayMobile;" class="example-element-row"
+        [class.example-expanded-row]="expandedElement === row"
+        (click)="expandedElement = expandedElement === row ? null : row">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+  </div>
+
+
+  <div *ngIf="tabla_PC" class="display-tablaPC">
+    <table mat-table [dataSource]="dataSourceProveedorFormasEnvio" class="mat-elevation-z8" matSort>
+      <ng-container matColumnDef="nombre">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let proveedorFormaEnvio">{{ proveedorFormaEnvio.idFormaEnvioNavigation?.nombre }}</td>
+      </ng-container>
+      <ng-container matColumnDef="descripcion">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let proveedorFormaEnvio">{{ proveedorFormaEnvio.idFormaEnvioNavigation?.descripcion }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="precio">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let proveedorFormaEnvio">{{ proveedorFormaEnvio.idFormaEnvioNavigation?.precio |
+          currency }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let proveedorFormaEnvio">
+
+          <app-proveedor-forma-envio-eliminar (onEliminar)="actualizarListado()"
+            [proveedorFormaEnvio]="proveedorFormaEnvio"></app-proveedor-forma-envio-eliminar>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="a">
+        <th mat-header-cell *matHeaderCellDef="let formaEnvio">
+          <button (click)="altaFormaEnvio()" style="margin-right: 6px;" mat-mini-fab color="primary"
+            style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
+            <mat-icon>add</mat-icon>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let formaEnvio"></td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsProductosProveedor"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsProductosProveedor;"></tr>
+    </table>
+    <div class="width-paginator">
+      <mat-paginator class="paginator-end" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+      </mat-paginator>
+    </div>
+  </div>
+  <div>
+    <button class="btn-stepper-hover" mat-button (click)="cancelar()">
+      Volver a Inicio
+    </button>
+  </div>
+  <br>
+</div>

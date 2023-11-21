@@ -1,0 +1,30 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Modificar Unidad de Medida</h1>
+      <form [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput required type="text" name="nombre" id="nombre" formControlName="nombre">
+        </mat-form-field>
+        <div *ngIf="validarNombre">
+          <p class="error-message">El campo no puede superar los 50 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Descripción</mat-label>
+          <input matInput required type="text" name="descripcion" id="descripcion" formControlName="descripcion">
+        </mat-form-field>
+        <div *ngIf="validarDescripcion">
+          <p class="error-message">El campo no puede superar los 100 caracteres</p>
+        </div>
+        <br>
+      </form>
+      <div>
+        <button mat-button class="btn-stepper-hover-guardar" (click)="guardar()">Guardar</button>
+        <button mat-button class="btn-stepper-hover-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+</div>

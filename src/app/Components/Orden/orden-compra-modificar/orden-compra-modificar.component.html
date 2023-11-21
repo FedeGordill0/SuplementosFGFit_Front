@@ -1,0 +1,24 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Modificar estado de orden de compra</h1>
+      <form [formGroup]="formulario">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="idEstadoOrden" name="idEstadoOrden">
+            <mat-option *ngFor="let estado of listadoEstadosOrden" [value]="estado.idEstadoOrden">
+              {{estado.estado}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+      </form>
+      <div>
+        <button style="margin-right: 5px;" class="btn btn-success" (click)="guardar()">Guardar</button>
+        <button class="btn btn-danger" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+</div>

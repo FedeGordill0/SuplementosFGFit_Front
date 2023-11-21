@@ -1,0 +1,37 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Modificar Forma de Envío</h1>
+      <form [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Forma de Envío</mat-label>
+          <input matInput required type="text" name="nombre" id="nombre" formControlName="nombre">
+        </mat-form-field>
+        <div *ngIf="validarNombre">
+          <p class="error-message">El campo no puede superar los 100 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Descripción</mat-label>
+          <input matInput required type="text" name="descripcion" id="descripcion" formControlName="descripcion">
+        </mat-form-field>
+        <div *ngIf="validarDescripcion">
+          <p class="error-message">El campo no puede superar los 100 caracteres</p>
+        </div>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Precio</mat-label>
+          <input required matInput type="text" name="precio" id="precio" formControlName="precio">
+        </mat-form-field>
+        <div *ngIf="validarPrecio">
+          <p class="error-message">Este campo únicamente acepta valores numéricos</p>
+        </div>
+        <br>
+      </form>
+      <div>
+        <button mat-button class="btn-stepper-hover-guardar" (click)="guardar()">Guardar</button>
+        <button mat-button class="btn-stepper-hover-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+</div>

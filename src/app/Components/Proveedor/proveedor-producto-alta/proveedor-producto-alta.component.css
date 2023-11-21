@@ -1,0 +1,56 @@
+.btn-stepper-hover-guardar {
+  margin-right: 5px;
+  background-color: white;
+  color: #187e4f;
+  transition: background-color 0.3s ease-in-out;
+}
+.btn-stepper-hover-guardar:hover {
+  margin-right: 5px;
+  background-color: #187e4f;
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+.btn-stepper-hover-cancelar {
+  background-color: white;
+  color: #ea4034;
+  transition: background-color 0.3s ease-in-out;
+}
+.btn-stepper-hover-cancelar:hover {
+  background-color: #ea4034;
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.mi-componente-background {
+  background-color: #f2b705;
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 0px) {
+  .mi-componente-background {
+    background-color: #f2b705;
+  }
+  .mat-card-style {
+    background-color: white;
+  }
+}
+/* --------------------PANTALLA CELULARES--------------------*/
+
+/* --------------------PANTALLA PARA MONITORES-------------------- */
+@media (min-width: 1024px) {
+  .mat-card-style {
+    width: 40%;
+    margin: 20px auto;
+  }
+  .mi-componente-background {
+    background-color: #f2b705;
+  }
+}

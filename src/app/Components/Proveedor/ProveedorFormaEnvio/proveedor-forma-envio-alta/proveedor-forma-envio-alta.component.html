@@ -1,0 +1,25 @@
+<div class="mi-componente-background">
+  <mat-card class="mat-card-style">
+    <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
+      <h1>Registrar forma de envío</h1>
+      <form [formGroup]="formulario">
+        <mat-form-field appearance="fill">
+          <mat-label>Forma de envío</mat-label>
+          <mat-select formControlName="idFormaEnvio" name="formaEnvio">
+            <mat-option *ngFor="let formaEnvio of listadoFormasEnvio" [value]="formaEnvio.idFormaEnvio">
+              {{formaEnvio.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+        <br>
+      </form>
+      <div>
+        <button mat-button class="btn-stepper-hover-guardar" (click)="guardar()">Guardar</button>
+        <button mat-button class="btn-stepper-hover-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

@@ -1,0 +1,188 @@
+<div style="padding: 10px;">
+
+  <mat-stepper class="example-stepper mat-card-style" [orientation]="(stepperOrientation | async)!">
+    <mat-step [stepControl]="firstFormGroup" class="mat-card-style-2">
+
+      <mat-card class="mat-card-style-2">
+        <h2>Orden de compra</h2>
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Elegir Proveedor</ng-template>
+          <mat-form-field>
+            <mat-label>Proveedor</mat-label>
+            <mat-select formControlName="proveedorControl" (selectionChange)="cargarDatosProveedor()">
+              <mat-option *ngFor="let proveedor of proveedores" [value]="proveedor.idProveedor">
+                {{ proveedor.nombre }}
+              </mat-option></mat-select>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-label>Forma de envío</mat-label>
+            <mat-select formControlName="formaEnvioControl">
+              <mat-option *ngFor="let formaEnvio of proveedoresXformaEnvios" [value]="formaEnvio.idProveedorFormaEnvio">
+                {{ formaEnvio.idFormaEnvioNavigation?.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-label>Forma de pago</mat-label>
+            <mat-select formControlName="formaPagoControl">
+              <mat-option *ngFor="let formaPago of proveedoresXformaPagos" [value]="formaPago.idProveedorFormaPago">
+                {{ formaPago.idFormaPagoNavigation?.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <br>
+        <div style="display: flex;justify-content: end;">
+          <button class="btn-stepper-hover" mat-button matStepperNext (click)="next()">Siguiente</button>
+        </div>
+      </mat-card>
+
+      <div style="display: flex;justify-content: center;">
+        <button class="btn-stepper-hover-inicio" mat-button (click)="inicio()">Volver a inicio</button>
+      </div>
+    </mat-step>
+
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Elegir Productos</ng-template>
+        <div style="display: flex;flex-wrap: wrap;overflow-x: auto;  justify-content: center;">
+          <div *ngFor="let productoXProveedor of productosXproveedores; let i = index" style="width: 335px; margin: 10px; display: flex; flex-direction: column;padding: 2px;
+            background: white; border-radius: 10px;">
+            <mat-checkbox (change)="toggleProductoSelection(productoXProveedor)"
+              [checked]="productoXProveedor.isSelected">
+              <img [src]="productoXProveedor.idProductoNavigation?.imagen" width="70px" height="70px">
+              {{productoXProveedor.idProductoNavigation?.nombre}} | Marca:
+              {{productoXProveedor.idProductoNavigation?.marca}}
+
+              <br>
+              <div
+                style="display: flex;justify-content: center;align-items: center;position: relative;font-size: 20px;">
+                <p>{{ productoXProveedor.precio | currency }}</p>
+              </div>
+            </mat-checkbox>
+
+            <!-- Agregar un campo de entrada numérica para la cantidad -->
+            <mat-form-field appearance="fill">
+              <input matInput type="number" formControlName="cantidad" [(ngModel)]="productoXProveedor.cantidad"
+                min="0">
+              <mat-label>Cantidad</mat-label>
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="display: flex;justify-content: flex-end; ">
+          <button class="btn-stepper-hover-Productos" mat-button matStepperPrevious>Volver</button>
+          <button class="btn-stepper-hover-Productos" mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step [stepControl]="thirdFormGroup" label="Fill out your phone number">
+      <div>
+        <form [formGroup]="thirdFormGroup" class="form-display">
+          <mat-card id="mat-card">
+            <ng-template matStepLabel>Resumen de la Compra</ng-template>
+            <div style="display: flex; flex-direction: column;justify-content: space-around;">
+              <div>
+                <h2>Productos seleccionados</h2>
+                <ul type="none">
+                  <li *ngFor="let producto of selectedProductos">
+                    <div style="display: flex;">
+                      <img [src]="producto.idProductoNavigation?.imagen" width="80px" height="80px">
+                      <div style="padding: 10px;">
+                        {{producto.idProductoNavigation?.nombre }} | {{producto.idProductoNavigation?.marca }}
+                        <br>
+                        <p style="display: flex;align-content: flex-start;justify-content: flex-end;font-size: 20px;">
+                          {{ producto.precio | currency }} x {{producto.cantidad }}
+                        </p>
+                        <br>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div style="padding: 10px;">
+                <div>
+                  <div style="display: flex;align-items: center;align-content: center;flex-direction: row;">
+                    <div style="align-items: center;width: 200px;padding-right: 10px;text-align: right;">
+                      <h3>Proveedor </h3>
+                    </div>
+                    <div
+                      style="display:flex;align-items: center;background-color: whitesmoke;padding: 5px;width: 200px;">
+                      <h3 style="padding-left: 5px;" *ngFor="let proveedor of selectedProveedor">
+                        {{ proveedor.nombre }}
+                      </h3>
+                    </div>
+                  </div>
+                  <div style="display: flex;align-items: center;align-content: center;flex-direction: row;">
+                    <div style="align-items: center;width: 200px;padding-right: 10px;text-align: right;">
+                      <h3>Fecha </h3>
+                    </div>
+                    <div
+                      style="display:flex;align-items: center;background-color: whitesmoke;padding: 5px;width: 200px;">
+                      <h3 style="padding-left: 5px;">
+                        {{fechaRegistro | date:'dd/MM/yyyy'}}
+                      </h3>
+                    </div>
+                  </div>
+                  <div style="display: flex;align-items: center;align-content: center;flex-direction: row;">
+                    <div style="align-items: center;width: 200px;padding-right: 10px;text-align: right;">
+                      <h3>Forma de envío </h3>
+                    </div>
+                    <div
+                      style="display:flex;align-items: center;background-color: whitesmoke;padding: 5px;width: 200px;">
+                      <h3 style="padding-left: 5px;" *ngFor="let formaEnvio of selectedProveedorFormasEnvio">
+                        {{formaEnvio.idFormaEnvioNavigation?.nombre }}
+                        ({{formaEnvio.idFormaEnvioNavigation?.precio|currency}})
+                      </h3>
+                    </div>
+                  </div>
+                  <div style="display: flex;align-items: center;align-content: center;flex-direction: row;">
+                    <div style="align-items: center;width: 200px;padding-right: 10px;text-align: right;">
+                      <h3>Forma de pago </h3>
+                    </div>
+                    <div
+                      style="display:flex;align-items: center;background-color: whitesmoke;padding: 5px;width: 200px;">
+                      <h3 style="padding-left: 5px;" *ngFor="let formaPago of selectedProveedorFormasPago">
+                        {{formaPago.idFormaPagoNavigation?.nombre }} ( {{formaPago.idFormaPagoNavigation?.porcentaje
+                        }}%)
+                      </h3>
+                    </div>
+                  </div>
+                  <div style="display: flex;align-items: center;align-content: center;flex-direction: row;">
+                    <div style="align-items: center;width: 200px;padding-right: 10px;text-align: right;">
+                      <h3>Estado </h3>
+                    </div>
+                    <div
+                      style="display:flex;align-items: center;background-color: whitesmoke;padding: 5px;width: 200px;">
+                      <h3 style="padding-left: 5px;" *ngFor="let proveedor of selectedProveedor">
+                        <img src="../../../../assets/dot_icon.png" width="7px" height="7px"> Pendiente
+                      </h3>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div
+              style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end;font-weight: bold;font-size: 20px;padding: 10px">
+              <p>Monto total
+                <br>
+                {{ thirdFormGroup.get('totalCompra')?.value | currency }}
+              </p>
+            </div>
+            <div style="display: flex;justify-content: flex-end;">
+              <button class="btn-stepper-hover" mat-button matStepperPrevious>Volver</button>
+              <button class="btn-stepper-hover-comprar" mat-button (click)="generarOrden()">Comprar</button>
+            </div>
+          </mat-card>
+        </form>
+      </div>
+    </mat-step>
+
+  </mat-stepper>
+</div>

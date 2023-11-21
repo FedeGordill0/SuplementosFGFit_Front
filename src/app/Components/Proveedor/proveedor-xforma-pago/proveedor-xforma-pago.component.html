@@ -1,0 +1,10 @@
+<table mat-table [dataSource]="dataSourceFormasPago" class="mat-elevation-z8" matSort>
+  <ng-container matColumnDef="nombre">
+    <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let proveedor">{{ proveedor.idFormaPagoNavigation?.nombre }}</td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsFormasPago"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsFormasPago;"></tr>
+</table>
