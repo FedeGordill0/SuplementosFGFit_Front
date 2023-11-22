@@ -235,7 +235,7 @@ export class ProveedorModificarComponent {
     this.router.navigate(['proveedor/listado']);
   }
   openSnackBarSuccess() {
-    this._snackBar.openFromComponent(AltaComponent, {
+    this._snackBar.openFromComponent(ModificarComponent, {
       duration: 1 * 1500,
     });
   }

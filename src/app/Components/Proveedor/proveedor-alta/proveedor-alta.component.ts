@@ -86,9 +86,9 @@ export class ProveedorAltaComponent implements OnInit, OnDestroy {
         next: (listado: any) => {
           this.listadoProductos = listado;
 
-          this.listadoProductos.forEach((producto) => {
-            this.agregarPrecioProducto(producto);
-          });
+          // this.listadoProductos.forEach((producto) => {
+          //   this.agregarPrecioProducto(producto);
+          // });
         },
         error: () => {
           alert('ERROR ERROR');
