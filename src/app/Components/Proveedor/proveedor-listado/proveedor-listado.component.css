@@ -74,3 +74,29 @@ tr.example-element-row:not(.example-expanded-row):active {
   color: white;
   transition: background-color 0.3s ease-in-out;
 }
+@media (min-width: 0px) {
+  .mi-componente-background {
+    background-color: #f2b705;
+  }
+  .mat-card-style {
+    /* style="margin: 70px auto;width: 35%;height: 380px;" */
+    background-color: white;
+  }
+}
+/* --------------------PANTALLA CELULARES--------------------*/
+
+/* --------------------PANTALLA PARA MONITORES-------------------- */
+@media (min-width: 1024px) {
+  .mat-card-style {
+    width: 40%;
+    margin: 20px auto;
+  }
+  .mi-componente-background {
+    background-color: #f2b705;
+  }
+}
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 1px;
+}

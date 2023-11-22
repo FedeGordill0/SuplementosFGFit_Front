@@ -195,28 +195,28 @@ export class ProveedorModificarComponent {
               idFormaPago: idFormaPago,
             };
 
-            this.proveedorxFormaEnvioService
-              .putProveedorFormaEnvio(this.proveedorxFormaEnvioObj)
-              .subscribe({
-                next: () => {},
+            // this.proveedorxFormaEnvioService
+            //   .putProveedorFormaEnvio(this.proveedorxFormaEnvioObj)
+            //   .subscribe({
+            //     next: () => {},
 
-                error: () => {
-                  alert(
-                    'this.proveedorxFormaEnvioService.putProveedorFormaEnvio'
-                  );
-                },
-              });
-            this.proveedorxFormaPagoService
-              .putProveedorFormaPago(this.proveedorxFormaPagoObj)
-              .subscribe({
-                next: () => {},
+            //     error: () => {
+            //       alert(
+            //         'this.proveedorxFormaEnvioService.putProveedorFormaEnvio'
+            //       );
+            //     },
+            //   });
+            // this.proveedorxFormaPagoService
+            //   .putProveedorFormaPago(this.proveedorxFormaPagoObj)
+            //   .subscribe({
+            //     next: () => {},
 
-                error: () => {
-                  alert(
-                    'this.proveedorxFormaEnvioService.putProveedorFormaEnvio'
-                  );
-                },
-              });
+            //     error: () => {
+            //       alert(
+            //         'this.proveedorxFormaEnvioService.putProveedorFormaEnvio'
+            //       );
+            //     },
+            //   });
 
             this.openSnackBarSuccess();
             this.router.navigate(['proveedor/listado']);
