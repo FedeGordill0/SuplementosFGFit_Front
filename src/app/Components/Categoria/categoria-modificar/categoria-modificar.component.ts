@@ -80,7 +80,6 @@ export class CategoriaModificarComponent implements OnInit, OnDestroy {
           this.categoriaService.getCategoriaID(id).subscribe({
             next: (c: any) => {
               this.categoria = c;
-              console.log(this.categoria);
               this.formulario = this.fb.group({
                 idCategoria: [c.resultado.idCategoria],
                 nombre: [c.resultado.nombre],

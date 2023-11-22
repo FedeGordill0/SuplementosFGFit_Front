@@ -87,12 +87,10 @@ export class CategoriaListadoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.tamano();
     this.usuario = localStorage.getItem('email');
-    console.log('usuario', this.usuario);
     this.suscription.add(
       this.usuarioRolService.getUsuariosRoles().subscribe({
         next: (listado: any) => {
           this.usuariosRoles = listado;
-          console.log('this.usuariosRoles', this.usuariosRoles);
           if (this.usuario === 'admin') {
             this.rol = 'Administrador';
           } else {
@@ -123,7 +121,6 @@ export class CategoriaListadoComponent implements OnInit, OnDestroy {
     this.suscription.add(
       this.categoriaService.getCategorias().subscribe({
         next: (listado: any) => {
-          console.log(listado);
           this.dataSource.data = listado;
           this.dataSourceUsuario.data = listado;
           this.dataSourceMobile.data = listado;

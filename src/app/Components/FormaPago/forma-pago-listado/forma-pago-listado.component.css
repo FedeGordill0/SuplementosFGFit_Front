@@ -1,11 +1,11 @@
 table {
-  width: 50vw;
+  width: 55vw;
 }
 .mat-sort-header-container {
   align-items: center;
 }
 .width-paginator {
-  width: 50vw;
+  width: 55vw;
 }
 .paginator-end {
   display: flex;
@@ -79,4 +79,17 @@ tr.example-element-row:not(.example-expanded-row):active {
   background-color: #f2b705;
   color: white;
   transition: background-color 0.3s ease-in-out;
+}
+.div-general {
+  background-color: white;
+  width: 100%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  align-items: center;
+}
+.btn-margin {
+  margin-right: 7px;
 }

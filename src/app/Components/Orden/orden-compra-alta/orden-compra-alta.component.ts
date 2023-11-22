@@ -103,10 +103,9 @@ export class OrdenCompraAltaComponent implements OnInit {
     );
   }
   next() {
-    // Llamar al método para actualizar las selecciones de formas de envío y pago
-    this.updateSelectedProveedores();
-    this.updateSelectedFormasEnvio();
-    this.updateSelectedFormasPago();
+    this.selectProveedores();
+    this.selectFormasEnvio();
+    this.selectFormasPago();
   }
   cargarDatosProveedor() {
     const proveedorId = this.firstFormGroup.get('proveedorControl')?.value;
@@ -122,47 +121,37 @@ export class OrdenCompraAltaComponent implements OnInit {
               datosProveedor.proveedoresXformaEnvios;
             this.proveedoresXformaPagos = datosProveedor.proveedoresXformaPagos;
 
-            // Inicializa las cantidades en 0
             this.productosXproveedores.forEach((producto) => {
               producto.cantidad = 0;
             });
 
-            // Actualiza las selecciones
-            this.updateSelectedProveedores();
+            this.selectProveedores();
           })
       );
     }
   }
 
-  toggleProductoSelection(producto: any) {
+  selectChkProducto(producto: any) {
     producto.isSelected = !producto.isSelected;
-    // Asigna el producto seleccionado
+
     if (producto.isSelected) {
       this.selectedProductos = [producto.idProductoNavigation];
     }
-    console.log(
-      ' toggleProductoSelectionselectedProductos',
-      this.selectedProductos
-    );
+    console.log(' selectChkProductoselectedProductos', this.selectedProductos);
     this.updateSelectedProductos();
   }
 
-  updateSelectedFormasEnvio() {
+  selectFormasEnvio() {
     const formaEnvioId = this.firstFormGroup.get('formaEnvioControl')?.value;
 
-    // Busca la forma de envío seleccionada en el listadoFormasEnvio
     const proveedorFormaEnvioSeleccionada = this.proveedoresXformaEnvios.find(
       (f) => f.idProveedorFormaEnvio === formaEnvioId
     );
-    console.log(
-      'proveedorFormaEnvioSeleccionadaaaaaaaaaaaaaaa',
-      proveedorFormaEnvioSeleccionada
-    );
+    console.log(proveedorFormaEnvioSeleccionada);
     if (proveedorFormaEnvioSeleccionada) {
       this.selectedProveedorFormasEnvio = [proveedorFormaEnvioSeleccionada];
       this.precioFormaEnvio =
         proveedorFormaEnvioSeleccionada.idFormaEnvioNavigation?.precio || 0;
-      console.log('precioFormaEnviooooooooooo', this.precioFormaEnvio);
 
       this.selectedProveedorFormasEnvio.forEach((proveedorFormaEnvio: any) => {
         this.idFormaEnvioOrdenCompra = proveedorFormaEnvio.idFormaEnvio;
@@ -173,10 +162,9 @@ export class OrdenCompraAltaComponent implements OnInit {
     }
   }
 
-  updateSelectedFormasPago() {
+  selectFormasPago() {
     const formaPagoId = this.firstFormGroup.get('formaPagoControl')?.value;
 
-    // Busca la forma de envío seleccionada en el listadoFormasEnvio
     const proveedorFormaPagoSeleccionada = this.proveedoresXformaPagos.find(
       (f) => f.idProveedorFormaPago === formaPagoId
     );
@@ -194,11 +182,10 @@ export class OrdenCompraAltaComponent implements OnInit {
     }
   }
 
-  updateSelectedProveedores() {
+  selectProveedores() {
     const proveedorId = this.firstFormGroup.get('proveedorControl')?.value;
     console.log('proveedorId', proveedorId);
 
-    // Buscar el proveedor correspondiente en la lista de proveedores
     const proveedorSeleccionado = this.proveedores.find(
       (proveedor: any) => proveedor.idProveedor === proveedorId
     );
@@ -222,18 +209,17 @@ export class OrdenCompraAltaComponent implements OnInit {
         iterator.idProductoNavigation?.idCategoriaNavigation?.precio
       );
     }
-    this.calculateTotal();
+    this.calcularTotal();
   }
 
-  calculateTotal() {
-    // detalle.idOrdenCompraNavigation?.idFormaEnvioNavigation?.precio
+  calcularTotal() {
     const total = this.selectedProductos.reduce(
       (acc, producto: DetalleOrden) =>
         acc + producto.precio * producto.cantidad,
       0
     );
-    const totalllll = total + this.precioFormaEnvio;
-    this.totalFP = totalllll + (totalllll * this.precioFormaPago) / 100;
+    const total2 = total + this.precioFormaEnvio;
+    this.totalFP = total2 + (total2 * this.precioFormaPago) / 100;
     console.log('this.totalFP', this.totalFP);
     this.thirdFormGroup.get('totalCompra')?.setValue(this.totalFP);
     this.thirdFormGroup
@@ -251,14 +237,13 @@ export class OrdenCompraAltaComponent implements OnInit {
     this.ordenCompra.idFormaPago = idFormaPago;
     this.ordenCompra.idProveedor = idProveedor;
     console.log('ordenCompra', this.ordenCompra);
-    // Cada orden de compra se crea con su ID asociado
+
     this.ordenCompraService.postOrdenCompra(this.ordenCompra).subscribe({
       next: (or: any) => {
         console.log('or', or);
         console.log('or', or.resultado.idOrdenCompra);
 
         this.detalleOrden = {};
-        // Paso 2: Iterar a través de los productos seleccionados y crear un detalle de orden para cada producto
         console.log('selectedProductos', this.selectedProductos);
         this.selectedProductos.forEach((productoSeleccionado: any) => {
           const detalleOrden: any = {
@@ -268,7 +253,6 @@ export class OrdenCompraAltaComponent implements OnInit {
             idProducto: productoSeleccionado.idProducto,
           };
 
-          // Llamar al método en tu servicio para crear el detalle de orden en el servidor
           this.detalleOrdenService
             .postDetalleOrden(detalleOrden)
             .subscribe((detalleCreado: any) => {
@@ -299,7 +283,6 @@ export class OrdenCompraAltaComponent implements OnInit {
   mercadoPago() {
     const urlMercadoPago = 'https://link.mercadopago.com.ar/fgfit';
 
-    // Abre la URL en una nueva pestaña o ventana
     window.open(urlMercadoPago, '_blank');
   }
 
@@ -316,10 +299,8 @@ export class OrdenCompraAltaComponent implements OnInit {
       );
 
       console.log('Email enviado con éxito:', response);
-      // Puedes agregar lógica adicional aquí según tu necesidad
     } catch (error) {
       console.error('Error al enviar el correo electrónico:', error);
-      // Puedes manejar el error de alguna manera, como mostrar un mensaje al usuario
     }
   }
   inicio() {

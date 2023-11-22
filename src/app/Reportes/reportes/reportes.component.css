@@ -16,3 +16,38 @@ table {
   color: #f2b705;
   transition: background-color 0.3s ease-in-out;
 }
+@media (min-width: 0px) {
+  .width-paginator {
+    width: 62vw;
+  }
+}
+@media (min-width: 1024px) {
+  .width-paginator {
+    width: 50vw;
+  }
+}
+.div-general {
+  margin: 5% auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.div-monto {
+  display: none;
+  text-align: center;
+}
+.div-nivel-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.div-nivel-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.div-canvas {
+  width: 800px;
+  height: 400px;
+}

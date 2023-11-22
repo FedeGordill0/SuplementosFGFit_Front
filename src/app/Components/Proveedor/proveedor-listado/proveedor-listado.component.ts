@@ -275,6 +275,7 @@ export class ProveedorListadoComponent implements OnInit, OnDestroy {
   filtro(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSourceMobile.filter = filterValue.trim().toLowerCase();
   }
   filtroUsuario(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

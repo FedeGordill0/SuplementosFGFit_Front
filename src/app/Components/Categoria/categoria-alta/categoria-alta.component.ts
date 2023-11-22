@@ -47,7 +47,6 @@ export class CategoriaAltaComponent implements OnInit, OnDestroy {
   guardar() {
     if (this.formulario.valid) {
       this.categoria = this.formulario.value;
-      console.log(this.formulario.value.nombre);
       this.suscripcion.add(
         this.categoriaService.postCategoria(this.categoria).subscribe({
           next: () => {

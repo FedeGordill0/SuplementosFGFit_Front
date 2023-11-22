@@ -3,33 +3,28 @@
   <div *ngIf="tabla_M">
     <mat-drawer-container class="example-container" autosize>
       <!-- SIDENAV -->
-      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 70%; background-color: #f2b705;">
-        <div class="example-sidenav-content" style="
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      align-items: center;
-      justify-content: flex-end;">
+      <mat-drawer #drawer class="example-sidenav sidenav-mobile-background" mode="side">
+        <div class="example-sidenav-content sidenav-style">
           <button type="button" mat-button (click)="drawer.toggle()">
-            <span class="material-symbols-outlined" style="color:white">
+            <span class="material-symbols-outlined close-white">
               close
             </span>
           </button>
         </div>
-        <div style="text-align: center; margin-top: 2px;">
-          <img src="../../../../assets/logop.png" style="max-width: 90px;height: 100px;margin: 2px auto;">
-          <p style="font-family: 'Work Sans', sans-serif;font-size: 20px;color: white;">FG-FIT <br> Suplementos</p>
+        <div class="text-align-image">
+          <img src="../../../../assets/logop.png" class="img-max-width">
+          <p class="title-style">FG-FIT <br> Suplementos</p>
         </div>
         <div class="elemento">
-          <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton7()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded7 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Reportes
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/reportes']">
-              <span class="material-symbols-outlined">
+              <span class="material-symbols-outlined span-margin-right">
                 analytics
               </span>
               Reportes
@@ -39,15 +34,15 @@
         </div>
         <br>
         <div class="elemento">
-          <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton1()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Orden de Compra
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/ordenCompra/alta']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">
+              <span class="material-symbols-outlined span-margin-right">
                 receipt_long
               </span>
               Orden
@@ -56,57 +51,57 @@
         </div>
 
         <div class="elemento">
-          <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton2()" autosize>
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded2 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Productos
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/producto/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">fitness_center</span>
+              <span class="material-symbols-outlined span-margin-right">fitness_center</span>
               Productos
             </button>
             <button class="button-style" autosize [routerLink]="['/categoria/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">category</span>
+              <span class="material-symbols-outlined span-margin-right">category</span>
               Categorías
             </button>
             <button class="button-style" autosize [routerLink]="['/unidadMedida/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">straighten</span>
+              <span class="material-symbols-outlined span-margin-right">straighten</span>
               Unidad de Medida
             </button>
           </mat-expansion-panel>
         </div>
 
         <div class="elemento">
-          <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton3()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{isExpanded3 ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
                 Proveedores
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/proveedor/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">contact_page</span>
+              <span class="material-symbols-outlined span-margin-right">contact_page</span>
               Proveedores
             </button>
           </mat-expansion-panel>
         </div>
 
         <div class="elemento">
-          <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton4()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded4 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Operaciones
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/formaEnvio/listado']"><span
-                style="margin-right: 2px;" class="material-symbols-outlined">local_shipping</span>
+                class="material-symbols-outlined span-margin-right">local_shipping</span>
               Forma de Envío
             </button>
-            <button class="button-style" autosize [routerLink]="['/formaPago/listado']"><span style="margin-right: 2px;"
-                class="material-symbols-outlined">payments</span>
+            <button class="button-style" autosize [routerLink]="['/formaPago/listado']"><span
+                class="material-symbols-outlined span-margin-right">payments</span>
               Forma de Pago
             </button>
           </mat-expansion-panel>
@@ -117,10 +112,7 @@
             <mat-expansion-panel-header (click)="toggleButton5()">
               <mat-panel-title>
 
-                <div style="font-size: 18px;
-                display: flex;
-                padding-top: 10px;
-                flex-direction: row;">
+                <div class="div-user">
                   <span class="material-symbols-outlined">person</span>
                   <div style="padding: 2px;">
                     <p *ngIf="usuario">{{usuario}}</p>
@@ -130,6 +122,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <br>
+
 
             <div>
               <p>Rol: {{rol}}</p>
@@ -144,17 +137,17 @@
           </mat-expansion-panel>
         </div>
         <br>
-        <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+        <div class="elemento div-terminos">
 
-          <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogFormaEnvio()">
+          <button class="button-terminos" autosize mat-button (click)="openDialogFormaEnvio()">
             <span class="material-symbols-outlined" style="margin-right: 6px;">
               help
             </span>Preguntas frecuentes</button>
 
         </div>
-        <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+        <div class="elemento div-terminos">
 
-          <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogTerminos()">
+          <button class="button-terminos" autosize mat-button (click)=" openDialogTerminos()">
             <span class="material-symbols-outlined" style="margin-right: 6px;">
               gavel
             </span>Terminos y condiciones</button>
@@ -179,10 +172,7 @@
         </div>
 
 
-        <mat-form-field style="display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;">
+        <mat-form-field class="mat-form-field-style-mobile">
           <mat-label>Buscar por estado de orden de compra</mat-label>
           <input matInput (keyup)="applyFilterMobile($event)" #input>
         </mat-form-field>
@@ -208,7 +198,6 @@
               <td mat-cell *matCellDef="let orden" [attr.colspan]="columnsToDisplayWithExpand.length">
                 <div class="example-element-detail">
                   <div class="example-element-diagram">
-                    <!-- <div class="example-element-descripcion">{{orden.precio}} </div> -->
                     <div class="example-element-descripcion">
                       Producto <br> {{orden.IdProductoNavigation?.Nombre}} <br>
                       Pago | {{orden.IdOrdenCompraNavigation?.IdFormaPagoNavigation?.Nombre}} <br>
@@ -216,13 +205,12 @@
                     </div>
                   </div>
                   <div class="example-element-description">
-                    <!-- {{orden.precio}} -->
+
                     {{orden.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado}}
                     <br>
                     <div style="display: flex;">
-                      <button style="margin-right: 6px;"
-                        [routerLink]="['/ordenCompra/modificar/' + orden.IdOrdenCompra]" mat-mini-fab color="primary"
-                        style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
+                      <button [routerLink]="['/ordenCompra/modificar/' + orden.IdOrdenCompra]" mat-mini-fab
+                        color="primary" style="margin-right: 7px;" aria-label="Example icon button with a menu icon">
                         <mat-icon>edit</mat-icon>
                       </button>
                     </div>
@@ -249,25 +237,25 @@
   <div *ngIf="tabla_PC">
     <mat-drawer-container class="example-container" autosize>
       <mat-drawer mode="side" opened class="mat-drawer-style">
-        <div style="text-align: center; margin-top: 2px;">
-          <img src="../../../../assets/logop.png" style="max-width: 90px;height: 100px;margin: 2px auto;">
-          <p style="font-family: 'Work Sans', sans-serif;font-size: 20px;color: white;">FG-FIT <br> Suplementos</p>
+        <div class="text-align-image">
+          <img src="../../../../assets/logop.png" class="img-max-width">
+          <p class="title-style">FG-FIT <br> Suplementos</p>
         </div>
 
-        <div style="display: flex; flex-direction: column;align-items: flex-start;margin-left: 12px;">
+        <div class="div-container-accordion">
 
           <mat-accordion>
 
             <div class="elemento">
-              <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton7()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded7 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Reportes
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/reportes']">
-                  <span class="material-symbols-outlined">
+                  <span class="material-symbols-outlined span-margin-right">
                     analytics
                   </span>
                   Reportes
@@ -277,15 +265,15 @@
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton1()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Orden de Compra
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/ordenCompra/alta']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">
+                  <span class="material-symbols-outlined span-margin-right">
                     receipt_long
                   </span>
                   Orden
@@ -294,57 +282,57 @@
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton2()" autosize>
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded2 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Productos
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/producto/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">fitness_center</span>
+                  <span class="material-symbols-outlined span-margin-right">fitness_center</span>
                   Productos
                 </button>
                 <button class="button-style" autosize [routerLink]="['/categoria/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">category</span>
+                  <span class="material-symbols-outlined span-margin-right">category</span>
                   Categorías
                 </button>
                 <button class="button-style" autosize [routerLink]="['/unidadMedida/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">straighten</span>
+                  <span class="material-symbols-outlined span-margin-right">straighten</span>
                   Unidad de Medida
                 </button>
               </mat-expansion-panel>
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton3()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{isExpanded3 ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
                     Proveedores
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/proveedor/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">contact_page</span>
+                  <span class="material-symbols-outlined span-margin-right">contact_page</span>
                   Proveedores
                 </button>
               </mat-expansion-panel>
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton4()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded4 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Operaciones
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/formaEnvio/listado']"><span
-                    style="margin-right: 2px;" class="material-symbols-outlined">local_shipping</span>
+                    class="material-symbols-outlined span-margin-right">local_shipping</span>
                   Forma de Envío
                 </button>
                 <button class="button-style" autosize [routerLink]="['/formaPago/listado']"><span
-                    style="margin-right: 2px;" class="material-symbols-outlined">payments</span>
+                    class="material-symbols-outlined span-margin-right">payments</span>
                   Forma de Pago
                 </button>
               </mat-expansion-panel>
@@ -355,7 +343,7 @@
                 <mat-expansion-panel-header (click)="toggleButton5()">
                   <mat-panel-title>
 
-                    <div style="font-size: 18px;display:flex;flex-direction: row; align-items: center;">
+                    <div class="div-user-table">
                       <span class="material-symbols-outlined">person
                       </span><span class="ms-1 d-none d-sm-inline" *ngIf="usuario">{{usuario}}</span>
                     </div>
@@ -376,17 +364,17 @@
               </mat-expansion-panel>
             </div>
 
-            <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+            <div class="elemento div-terminos">
 
-              <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogFormaEnvio()">
+              <button class="button-terminos" autosize mat-button (click)="openDialogFormaEnvio()">
                 <span class="material-symbols-outlined" style="margin-right: 6px;">
                   help
                 </span>Preguntas frecuentes</button>
 
             </div>
-            <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+            <div class="elemento div-terminos">
 
-              <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogTerminos()">
+              <button class="button-terminos" autosize mat-button (click)="openDialogTerminos()">
                 <span class="material-symbols-outlined" style="margin-right: 6px;">
                   gavel
                 </span>Terminos y condiciones</button>
@@ -407,10 +395,10 @@
       </mat-menu>
 
       <mat-drawer-content>
-        <div style="width: 100%;">
-          <div style="display: flex;justify-content: center;flex-direction: column;max-width: 80%;margin: 0px auto;">
-            <div *ngIf="usuario==='admin'">
-              <h1 style="text-align: center;">Panel de Administración</h1>
+        <div class="mat-drawer-content-style">
+          <div class="div-table-style">
+            <div *ngIf="usuario==='admin'" style="margin-top:10px;">
+              <h1 style="text-align: center; font-size: 30px;">Panel de Administración</h1>
             </div>
 
 
@@ -496,27 +484,22 @@
   <div *ngIf="tabla_M">
     <mat-drawer-container class="example-container" autosize>
       <!-- SIDENAV -->
-      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 70%; background-color: #f2b705;">
-        <div class="example-sidenav-content" style="
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      align-items: center;
-      justify-content: flex-end;">
+      <mat-drawer #drawer class="example-sidenav sidenav-mobile-background" mode="side">
+        <div class="example-sidenav-content sidenav-style">
           <button type="button" mat-button (click)="drawer.toggle()">
-            <span class="material-symbols-outlined" style="color:white">
+            <span class="material-symbols-outlined close-white">
               close
             </span>
           </button>
         </div>
-        <div style="text-align: center; margin-top: 2px;">
-          <img src="../../../../assets/logop.png" style="max-width: 90px;height: 100px;margin: 2px auto;">
-          <p style="font-family: 'Work Sans', sans-serif;font-size: 20px;color: white;">FG-FIT <br> Suplementos</p>
+        <div class="text-align-image">
+          <img src="../../../../assets/logop.png" class="img-max-width">
+          <p class="title-style">FG-FIT <br> Suplementos</p>
         </div>
         <div class="elemento">
-          <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton7()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded7 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Reportes
               </mat-panel-title>
@@ -532,9 +515,9 @@
         </div>
         <br>
         <div class="elemento">
-          <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton1()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Orden de Compra
               </mat-panel-title>
@@ -549,57 +532,57 @@
         </div>
 
         <div class="elemento">
-          <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton2()" autosize>
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded2 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Productos
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/producto/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">fitness_center</span>
+              <span class="material-symbols-outlined span-margin-right">fitness_center</span>
               Productos
             </button>
             <button class="button-style" autosize [routerLink]="['/categoria/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">category</span>
+              <span class="material-symbols-outlined span-margin-right">category</span>
               Categorías
             </button>
             <button class="button-style" autosize [routerLink]="['/unidadMedida/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">straighten</span>
+              <span class="material-symbols-outlined span-margin-right">straighten</span>
               Unidad de Medida
             </button>
           </mat-expansion-panel>
         </div>
 
         <div class="elemento">
-          <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton3()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{isExpanded3 ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
                 Proveedores
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/proveedor/listado']">
-              <span style="margin-right: 2px;" class="material-symbols-outlined">contact_page</span>
+              <span class="material-symbols-outlined span-margin-right">contact_page</span>
               Proveedores
             </button>
           </mat-expansion-panel>
         </div>
 
         <div class="elemento">
-          <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+          <mat-expansion-panel hideToggle class="toggle-expansion-style">
             <mat-expansion-panel-header (click)="toggleButton4()">
-              <mat-panel-title style="color: white;">
+              <mat-panel-title class="mat-panel-title-white">
                 <mat-icon>{{ isExpanded4 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                 Operaciones
               </mat-panel-title>
             </mat-expansion-panel-header>
             <button class="button-style" autosize [routerLink]="['/formaEnvio/listado']"><span
-                style="margin-right: 2px;" class="material-symbols-outlined">local_shipping</span>
+                class="material-symbols-outlined span-margin-right">local_shipping</span>
               Forma de Envío
             </button>
-            <button class="button-style" autosize [routerLink]="['/formaPago/listado']"><span style="margin-right: 2px;"
-                class="material-symbols-outlined">payments</span>
+            <button class="button-style" autosize [routerLink]="['/formaPago/listado']"><span
+                class="material-symbols-outlined span-margin-right">payments</span>
               Forma de Pago
             </button>
           </mat-expansion-panel>
@@ -610,10 +593,7 @@
             <mat-expansion-panel-header (click)="toggleButton5()">
               <mat-panel-title>
 
-                <div style="font-size: 18px;
-                display: flex;
-                padding-top: 10px;
-                flex-direction: row;">
+                <div class="div-user">
                   <span class="material-symbols-outlined">person</span>
                   <div style="padding: 2px;">
                     <p *ngIf="usuario">{{usuario}}</p>
@@ -637,17 +617,17 @@
           </mat-expansion-panel>
         </div>
         <br>
-        <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+        <div class="elemento div-terminos">
 
-          <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogFormaEnvio()">
+          <button class="button-terminos" autosize mat-button (click)="openDialogFormaEnvio()">
             <span class="material-symbols-outlined" style="margin-right: 6px;">
               help
             </span>Preguntas frecuentes</button>
 
         </div>
-        <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+        <div class="elemento div-terminos">
 
-          <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogTerminos()">
+          <button class="button-terminos" autosize mat-button (click)=" openDialogTerminos()">
             <span class="material-symbols-outlined" style="margin-right: 6px;">
               gavel
             </span>Terminos y condiciones</button>
@@ -667,14 +647,12 @@
             menu
           </span>
         </button>
+
         <h1 style="text-align: center;">Panel de Administración</h1>
 
 
 
-        <mat-form-field style="display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;">
+        <mat-form-field class="mat-form-field-style-mobile">
           <mat-label>Buscar por estado de orden de compra</mat-label>
           <input matInput (keyup)="applyFilterMobile($event)" #input>
         </mat-form-field>
@@ -695,11 +673,11 @@
                 {{orden.IdOrdenCompraNavigation?.FechaRegistro | date:'dd/MM/yyyy'}}</td>
             </ng-container>
 
+
             <ng-container matColumnDef="expandedDetail">
               <td mat-cell *matCellDef="let orden" [attr.colspan]="columnsToDisplayWithExpand.length">
                 <div class="example-element-detail">
                   <div class="example-element-diagram">
-                    <!-- <div class="example-element-descripcion">{{orden.precio}} </div> -->
                     <div class="example-element-descripcion">
                       Producto <br> {{orden.IdProductoNavigation?.Nombre}} <br>
                       Pago | {{orden.IdOrdenCompraNavigation?.IdFormaPagoNavigation?.Nombre}} <br>
@@ -707,7 +685,7 @@
                     </div>
                   </div>
                   <div class="example-element-description">
-                    <!-- {{orden.precio}} -->
+
                     {{orden.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado}}
                     <br>
 
@@ -734,25 +712,25 @@
   <div *ngIf="tabla_PC">
     <mat-drawer-container class="example-container" autosize>
       <mat-drawer mode="side" opened class="mat-drawer-style">
-        <div style="text-align: center; margin-top: 2px;">
-          <img src="../../../../assets/logop.png" style="max-width: 90px;height: 100px;margin: 2px auto;">
-          <p style="font-family: 'Work Sans', sans-serif;font-size: 20px;color: white;">FG-FIT <br> Suplementos</p>
+        <div class="text-align-image">
+          <img src="../../../../assets/logop.png" class="img-max-width">
+          <p class="title-style">FG-FIT <br> Suplementos</p>
         </div>
 
-        <div style="display: flex; flex-direction: column;align-items: flex-start;margin-left: 12px;">
+        <div class="div-container-accordion">
 
           <mat-accordion>
 
             <div class="elemento">
-              <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton7()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded7 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Reportes
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/reportes']">
-                  <span class="material-symbols-outlined">
+                  <span class="material-symbols-outlined span-margin-right">
                     analytics
                   </span>
                   Reportes
@@ -762,15 +740,15 @@
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel autosize hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel autosize hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton1()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Orden de Compra
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/ordenCompra/alta']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">
+                  <span class="material-symbols-outlined span-margin-right">
                     receipt_long
                   </span>
                   Orden
@@ -779,57 +757,57 @@
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton2()" autosize>
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded2 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Productos
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/producto/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">fitness_center</span>
+                  <span class="material-symbols-outlined span-margin-right">fitness_center</span>
                   Productos
                 </button>
                 <button class="button-style" autosize [routerLink]="['/categoria/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">category</span>
+                  <span class="material-symbols-outlined span-margin-right">category</span>
                   Categorías
                 </button>
                 <button class="button-style" autosize [routerLink]="['/unidadMedida/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">straighten</span>
+                  <span class="material-symbols-outlined span-margin-right">straighten</span>
                   Unidad de Medida
                 </button>
               </mat-expansion-panel>
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton3()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{isExpanded3 ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
                     Proveedores
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/proveedor/listado']">
-                  <span style="margin-right: 2px;" class="material-symbols-outlined">contact_page</span>
+                  <span class="material-symbols-outlined span-margin-right">contact_page</span>
                   Proveedores
                 </button>
               </mat-expansion-panel>
             </div>
 
             <div class="elemento">
-              <mat-expansion-panel hideToggle style="margin-bottom: 5px; background-color: #f2b705;">
+              <mat-expansion-panel hideToggle class="toggle-expansion-style">
                 <mat-expansion-panel-header (click)="toggleButton4()">
-                  <mat-panel-title style="color: white;">
+                  <mat-panel-title class="mat-panel-title-white">
                     <mat-icon>{{ isExpanded4 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     Operaciones
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <button class="button-style" autosize [routerLink]="['/formaEnvio/listado']"><span
-                    style="margin-right: 2px;" class="material-symbols-outlined">local_shipping</span>
+                    class="material-symbols-outlined span-margin-right">local_shipping</span>
                   Forma de Envío
                 </button>
                 <button class="button-style" autosize [routerLink]="['/formaPago/listado']"><span
-                    style="margin-right: 2px;" class="material-symbols-outlined">payments</span>
+                    class="material-symbols-outlined span-margin-right">payments</span>
                   Forma de Pago
                 </button>
               </mat-expansion-panel>
@@ -840,7 +818,7 @@
                 <mat-expansion-panel-header (click)="toggleButton5()">
                   <mat-panel-title>
 
-                    <div style="font-size: 18px;display:flex;flex-direction: row; align-items: center;">
+                    <div class="div-user-table">
                       <span class="material-symbols-outlined">person
                       </span><span class="ms-1 d-none d-sm-inline" *ngIf="usuario">{{usuario}}</span>
                     </div>
@@ -861,17 +839,17 @@
               </mat-expansion-panel>
             </div>
 
-            <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+            <div class="elemento div-terminos">
 
-              <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogFormaEnvio()">
+              <button class="button-terminos" autosize mat-button (click)="openDialogFormaEnvio()">
                 <span class="material-symbols-outlined" style="margin-right: 6px;">
                   help
                 </span>Preguntas frecuentes</button>
 
             </div>
-            <div class="elemento" style="display: flex;align-items: center;flex-direction: row;">
+            <div class="elemento div-terminos">
 
-              <button style="font-size: 14px;color:white" autosize mat-button (click)="openDialogTerminos()">
+              <button class="button-terminos" autosize mat-button (click)="openDialogTerminos()">
                 <span class="material-symbols-outlined" style="margin-right: 6px;">
                   gavel
                 </span>Terminos y condiciones</button>
@@ -892,8 +870,8 @@
       </mat-menu>
 
       <mat-drawer-content>
-        <div style="width: 100%;">
-          <div style="display: flex;justify-content: center;flex-direction: column;max-width: 80%;margin: 0px auto;">
+        <div class="mat-drawer-content-style">
+          <div class="div-table-style">
 
             <h1 style="text-align: center;">Panel de Administración</h1>
 

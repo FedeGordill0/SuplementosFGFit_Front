@@ -1,14 +1,10 @@
-<div style="
-margin: 5% auto;
-display: flex;
-flex-direction: column;
-justify-content: center;">
+<div class="div-general">
   <div class="yourParentDivCssClass">
     <mat-stepper #stepper>
       <mat-step>
         <ng-template matStepLabel>Monto total por rango de fechas</ng-template>
         <div style="display: flex; flex-direction: column;justify-content: center;align-items: center;">
-          <div style="display: none; text-align: center;" #monto>
+          <div class="div-monto" #monto>
             <h1>Monto total <br>{{acc | currency}}</h1>
           </div>
           <br>
@@ -32,8 +28,8 @@ justify-content: center;">
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Productos por proveedores</ng-template>
-        <div style="display: flex; flex-direction: column;justify-content: center;align-items: center;">
-          <div style="display:flex; flex-direction: row;align-items: center;">
+        <div class="div-nivel-1">
+          <div class="div-nivel-2">
             <mat-form-field>
               <mat-label>Buscar producto por proveedor</mat-label>
               <input matInput (keyup)="applyFilter($event)" #input>
@@ -73,7 +69,7 @@ justify-content: center;">
           <ng-template matStepLabel>Porcentaje de estado de órdenes</ng-template>
 
 
-          <div style="width: 800px; height: 400px;">
+          <div class="div-canvas">
             <canvas baseChart [data]="barChartData2" [options]="barChartOptions2" [plugins]="barChartPlugins2"
               [legend]="barChartLegend2" [type]="'bar'">
             </canvas>

@@ -1,7 +1,6 @@
 <div *ngIf="usuario ==='admin'">
   <div class="container-fluid">
-    <div
-      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+    <div class="div-general">
 
       <div>
         <h1 style="background-color: white;padding: 5px;text-align: center;">Formas de pago</h1>
@@ -43,15 +42,14 @@
                 [@detailExpand]="formaPago == expandedElement ? 'expanded' : 'collapsed'">
                 <div class="example-element-diagram">
 
-                  <div class="example-element-descripcion">{{formaPago.nombre}} </div>
+                  <div class="example-element-descripcion">Porcentaje <br> {{formaPago.porcentaje}}% </div>
                 </div>
                 <div class="example-element-description">
                   {{formaPago.descripcion}}
                   <br>
                   <div style="display: flex;">
-                    <button style="margin-right: 6px;" [routerLink]="['/formaPago/modificar/' +formaPago.idFormaPago]"
-                      mat-mini-fab color="primary" style="margin-right: 7px;"
-                      aria-label="Example icon button with a menu icon">
+                    <button class="btn-margin" [routerLink]="['/formaPago/modificar/' +formaPago.idFormaPago]"
+                      mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
                       <mat-icon>edit</mat-icon>
                     </button>
 
@@ -144,8 +142,7 @@
 
 <div *ngIf="usuario !=='admin'">
   <div class="container-fluid">
-    <div
-      style="background-color: white; width: 100%; margin: 20px auto;display: flex; justify-content: center; align-self: center;flex-direction: column; align-items: center;">
+    <div class="div-general">
 
       <div>
         <h1 style="background-color: white;padding: 5px;text-align: center;">Formas de pago</h1>
@@ -180,8 +177,7 @@
               <div class="example-element-detail"
                 [@detailExpand]="formaPago == expandedElement ? 'expanded' : 'collapsed'">
                 <div class="example-element-diagram">
-
-                  <div class="example-element-descripcion">{{formaPago.nombre}} </div>
+                  <div class="example-element-descripcion">Porcentaje <br> {{formaPago.porcentaje}}% </div>
                 </div>
                 <div class="example-element-description">
                   {{formaPago.descripcion}}

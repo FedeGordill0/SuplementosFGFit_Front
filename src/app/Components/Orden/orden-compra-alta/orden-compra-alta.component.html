@@ -51,8 +51,7 @@
         <div style="display: flex;flex-wrap: wrap;overflow-x: auto;  justify-content: center;">
           <div *ngFor="let productoXProveedor of productosXproveedores; let i = index" style="width: 335px; margin: 10px; display: flex; flex-direction: column;padding: 2px;
             background: white; border-radius: 10px;">
-            <mat-checkbox (change)="toggleProductoSelection(productoXProveedor)"
-              [checked]="productoXProveedor.isSelected">
+            <mat-checkbox (change)="selectChkProducto(productoXProveedor)" [checked]="productoXProveedor.isSelected">
               <img [src]="productoXProveedor.idProductoNavigation?.imagen" width="70px" height="70px">
               {{productoXProveedor.idProductoNavigation?.nombre}} | Marca:
               {{productoXProveedor.idProductoNavigation?.marca}}
@@ -64,7 +63,6 @@
               </div>
             </mat-checkbox>
 
-            <!-- Agregar un campo de entrada numérica para la cantidad -->
             <mat-form-field appearance="fill">
               <input matInput type="number" formControlName="cantidad" [(ngModel)]="productoXProveedor.cantidad"
                 min="0">
