@@ -1,0 +1,12 @@
+@media (min-width: 0px) {
+  table {
+    width: 10vw;
+  }
+}
+@media (max-width: 1024px) {
+  table {
+    width: 50vw;
+  }
+}
+/* max-width: 90vw;
+    position: static; */

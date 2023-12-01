@@ -28,7 +28,7 @@
             </div>
             <div class="example-element-description">
               <div class="example-element-descripcion">{{proveedorFormaEnvio.idFormaEnvioNavigation?.descripcion}}</div>
-              Precio {{proveedorFormaEnvio.idFormaEnvioNavigation?.precio | currency}}
+              Precio ${{proveedorFormaEnvio.idFormaEnvioNavigation?.precio |number:'1.2-2'}}
               <br>
               <div style="display: flex;">
 
@@ -62,8 +62,8 @@
       </ng-container>
       <ng-container matColumnDef="precio">
         <th mat-sort-header mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let proveedorFormaEnvio">{{ proveedorFormaEnvio.idFormaEnvioNavigation?.precio |
-          currency }}</td>
+        <td mat-cell *matCellDef="let proveedorFormaEnvio">${{ proveedorFormaEnvio.idFormaEnvioNavigation?.precio |
+          number:'1.2-2' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="acciones">

@@ -49,6 +49,7 @@ export class ProveedorFormaEnvioListadoComponent {
   ];
   @ViewChild(MatSort) sort!: MatSort;
   @Input() formaEnvioProveedorFor: any;
+  @Input() productoProveedorFor: any;
   @Input() idFormaEnvioFor: any;
   tabla_PC = true;
   tabla_M = false;
@@ -117,6 +118,7 @@ export class ProveedorFormaEnvioListadoComponent {
                     for (const iterator of this.listadoProveedorFormasEnvio) {
                       this.formaEnvioProveedorFor = iterator.idProveedor;
                       this.idFormaEnvioFor = iterator.idFormaEnvio;
+                      this.productoProveedorFor = iterator.idProveedor;
                     }
 
                     this.actualizarListado();
@@ -149,7 +151,7 @@ export class ProveedorFormaEnvioListadoComponent {
   }
   altaFormaEnvio() {
     this.router.navigate([
-      'proveedor/formasEnvio/alta/' + this.idFormaEnvioFor,
+      'proveedor/formasEnvio/alta/' + this.productoProveedorFor,
     ]);
   }
 

@@ -13,4 +13,5 @@ export class DetalleOrden {
 
   idProductoNavigation: any;
   producto?: Producto;
+  totalProducto?: number;
 }

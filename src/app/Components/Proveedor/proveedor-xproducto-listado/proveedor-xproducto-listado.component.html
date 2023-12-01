@@ -29,7 +29,7 @@
             </div>
             <div class="example-element-description">
               <div class="example-element-descripcion">{{productoProveedor.idProductoNavigation?.descripcion}}</div>
-              Precio {{productoProveedor.precio | currency}}
+              Precio ${{productoProveedor.precio | number:'1.2-2'}}
               <br>
               <div style="display: flex;">
                 <button
@@ -63,7 +63,8 @@
       </ng-container>
       <ng-container matColumnDef="precio">
         <th mat-sort-header mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let productoProveedor">{{ productoProveedor.precio | currency }}</td>
+        <td mat-cell *matCellDef="let productoProveedor">${{ productoProveedor.precio | number:'1.2-2' }}</td>
+
       </ng-container>
       <ng-container matColumnDef="imagen">
         <th mat-header-cell *matHeaderCellDef>Imagen</th>

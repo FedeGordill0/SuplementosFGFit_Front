@@ -34,22 +34,21 @@ export class ProveedorFormaEnvioAltaComponent {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe({
+      next: (params) => {
+        this.idProveedor = params['idProveedor'];
+        console.log(
+          'productoProveedorForproductoProveedorForproductoProveedorFor',
+          this.idProveedor
+        );
+      },
+      error: () => {},
+    });
     this.suscripcion.add(
       this.formaEnvioService.getFormasEnvio().subscribe({
         next: (listado: any) => {
           console.log('listadolistadolistadolistadolistado', listado);
           this.listadoFormasEnvio = listado;
-
-          this.activatedRoute.params.subscribe({
-            next: (params) => {
-              this.idProveedor = params['idProveedor'];
-              console.log(
-                'productoProveedorForproductoProveedorForproductoProveedorFor',
-                this.idProveedor
-              );
-            },
-            error: () => {},
-          });
         },
         error: () => {
           alert('ERROR categoriaService.getCategorias');
@@ -69,7 +68,7 @@ export class ProveedorFormaEnvioAltaComponent {
         this.proveedorFormaEnvio
       );
       const proveedorFormaEnvioObj: any = {
-        idroveedorFormaEnvio: this.proveedorFormaEnvio,
+        idProveedorFormaEnvio: this.proveedorFormaEnvio.idProveedorFormaEnvio,
         idFormaEnvio: this.formulario.value.idFormaEnvio,
         idProveedor: this.idProveedor,
       };
@@ -90,9 +89,13 @@ export class ProveedorFormaEnvioAltaComponent {
   }
 
   cancelar() {
-    this.router.navigate([
-      '/proveedor/formasEnvio/listado/' + this.idProveedor,
-    ]);
+    const idProveedor = this.activatedRoute.snapshot.params['idProveedor'];
+
+    if (idProveedor) {
+      this.router.navigate(['/proveedor/formasEnvio/listado/', idProveedor]);
+    } else {
+      this.router.navigate(['/proveedor/listado']);
+    }
   }
 
   openSnackBarSuccess() {

@@ -20,10 +20,22 @@ table {
   .width-paginator {
     width: 62vw;
   }
+  .p-position {
+    text-align: end;
+    position: relative;
+    right: 5px;
+    top: 5px;
+  }
 }
 @media (min-width: 1024px) {
   .width-paginator {
     width: 50vw;
+  }
+  .p-position {
+    text-align: end;
+    position: relative;
+    right: 85px;
+    top: 5px;
   }
 }
 .div-general {

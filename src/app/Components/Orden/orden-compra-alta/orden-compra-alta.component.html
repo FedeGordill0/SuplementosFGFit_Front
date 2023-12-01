@@ -59,7 +59,7 @@
               <br>
               <div
                 style="display: flex;justify-content: center;align-items: center;position: relative;font-size: 20px;">
-                <p>{{ productoXProveedor.precio | currency }}</p>
+                <p>${{ productoXProveedor.precio | number:'1.2-2' }}</p>
               </div>
             </mat-checkbox>
 
@@ -94,7 +94,7 @@
                         {{producto.idProductoNavigation?.nombre }} | {{producto.idProductoNavigation?.marca }}
                         <br>
                         <p style="display: flex;align-content: flex-start;justify-content: flex-end;font-size: 20px;">
-                          {{ producto.precio | currency }} x {{producto.cantidad }}
+                          {{ producto.precio | number:'1.2-2' }} x {{producto.cantidad }}
                         </p>
                         <br>
                       </div>
@@ -135,7 +135,7 @@
                       style="display:flex;align-items: center;background-color: whitesmoke;padding: 5px;width: 200px;">
                       <h3 style="padding-left: 5px;" *ngFor="let formaEnvio of selectedProveedorFormasEnvio">
                         {{formaEnvio.idFormaEnvioNavigation?.nombre }}
-                        ({{formaEnvio.idFormaEnvioNavigation?.precio|currency}})
+                        ({{formaEnvio.idFormaEnvioNavigation?.precio|number:'1.2-2'}})
                       </h3>
                     </div>
                   </div>
@@ -170,7 +170,7 @@
               style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end;font-weight: bold;font-size: 20px;padding: 10px">
               <p>Monto total
                 <br>
-                {{ thirdFormGroup.get('totalCompra')?.value | currency }}
+                ${{ thirdFormGroup.get('totalCompra')?.value | number:'1.2-2' }}
               </p>
             </div>
             <div style="display: flex;justify-content: flex-end;">

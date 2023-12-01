@@ -49,6 +49,7 @@ export class ProveedorFormaPagoListadoComponent {
   @ViewChild(MatSort) sort!: MatSort;
   @Input() formaPagoProveedorFor: any;
   @Input() idFormaPagoFor: any;
+  @Input() productoProveedorFor: any;
   tabla_PC = true;
   tabla_M = false;
   nombreFormaPagoTablaM: any = null;
@@ -115,6 +116,7 @@ export class ProveedorFormaPagoListadoComponent {
                     for (const iterator of this.listadoProveedorFormasPago) {
                       this.formaPagoProveedorFor = iterator.idProveedor;
                       this.idFormaPagoFor = iterator.idFormaPago;
+                      this.productoProveedorFor = iterator.idProveedor;
                     }
 
                     this.actualizarListado();
@@ -146,7 +148,9 @@ export class ProveedorFormaPagoListadoComponent {
     }
   }
   altaFormaPago() {
-    this.router.navigate(['proveedor/formasPago/alta/' + this.idFormaPagoFor]);
+    this.router.navigate([
+      'proveedor/formasPago/alta/' + this.productoProveedorFor,
+    ]);
   }
 
   cancelar() {

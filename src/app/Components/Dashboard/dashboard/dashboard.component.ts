@@ -40,6 +40,7 @@ import {
   animate,
 } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { OrdenCompraProductoComponent } from '../../Orden/orden-compra-producto/orden-compra-producto.component';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -76,20 +77,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
     'Proveedor',
     'Forma de Pago',
     'Forma de Envío',
-    'Monto Total',
     'Fecha',
     'Producto',
+    'Monto Total',
     'Estado',
     'a',
   ];
+  // displayedColumns: string[] = [
+  //   'Proveedor',
+  //   'Forma de Pago',
+  //   'Forma de Envío',
+  //   'Fecha',
+  //   'Producto',
+  //   'Monto Total',
+  //   'Estado',
+  //   'a',
+  // ];
   dataSourceUsuario = new MatTableDataSource<any>(this.listadoOrdenCompra);
   displayedColumnsUsuario: string[] = [
     'Proveedor',
     'Forma de Pago',
     'Forma de Envío',
-    'Monto Total',
     'Fecha',
     'Producto',
+    'Monto Total',
     'Estado',
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -127,6 +138,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   expandedElement: any | null;
   tabla_PC = true;
   tabla_M = false;
+  listadoProductosOrden: any;
+  precioProductoOrden: any;
   constructor(
     private router: Router,
     private usuarioService: UsuarioService,
@@ -187,17 +200,44 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.suscripcion.add(
-      this.detalleOrden.getDetallesOrdenesCompra().subscribe({
-        next: (listado: any) => {
-          console.log('getDetallesOrdenesCompra', listado);
-          //BORRAR ESTE FILTRO Y ASIGNAR  this.dataSource.data = this.listado;
-          this.listadoOrdenCompra = listado.$values;
-          console.log('this.listadoOrdenCompra', this.listadoOrdenCompra);
+    // this.suscripcion.add(
+    //   this.detalleOrden.getDetallesOrdenesCompra().subscribe({
+    //     next: (listado: any) => {
+    //       console.log('getDetallesOrdenesCompra', listado);
+    //       //BORRAR ESTE FILTRO Y ASIGNAR  this.dataSource.data = this.listado;
+    //       // this.listadoOrdenCompra = listado.$values.filter((element: any) => {
+    //       //   return element.$id == 2;
+    //       // });
+    //       this.listadoOrdenCompra = listado.$values;
+    //       console.log('this.listadoOrdenCompra', this.listadoOrdenCompra);
 
-          this.dataSource.data = this.listadoOrdenCompra;
-          this.dataSourceUsuario.data = this.listadoOrdenCompra;
-          this.dataSourceMobile.data = this.listadoOrdenCompra;
+    //       this.dataSource.data = this.listadoOrdenCompra;
+    //       this.dataSourceUsuario.data = this.listadoOrdenCompra;
+    //       this.dataSourceMobile.data = this.listadoOrdenCompra;
+    //     },
+    //     error: () => {
+    //       alert('ERROR usuarioRolService.getUsuarioRolID');
+    //     },
+    //   })
+    // );
+
+    this.suscripcion.add(
+      this.ordenCompraService.getOrdenesCompra().subscribe({
+        next: (listado: any) => {
+          console.log(listado);
+          this.dataSource.data = listado;
+          this.dataSourceMobile.data = listado;
+          this.dataSourceUsuario.data = listado;
+          this.listadoProductosOrden = listado.forEach((producto: any) => {
+            console.log('listadoProductosOrden', producto.detalleOrdens);
+            const precioProductoOrden = producto.detalleOrdens.map(
+              (pp: any) => pp.precio
+            );
+
+            // Concatena los precios al array acumulativo
+            this.precioProductoOrden = precioProductoOrden;
+            console.log('this.precioProductoOrden ', this.precioProductoOrden);
+          });
         },
         error: () => {
           alert('ERROR usuarioRolService.getUsuarioRolID');
@@ -220,33 +260,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.dataSource.filterPredicate = (data, filter) => {
       console.log('data', data);
-      console.log(
-        'data',
-        data.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado
-      );
-      return data.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado.toLowerCase().includes(
-        filter
-      );
+      console.log('data', data.idEstadoOrdenNavigation?.Estado);
+      return data.idEstadoOrdenNavigation?.estado
+        .toLowerCase()
+        .includes(filter);
     };
     this.dataSourceUsuario.filterPredicate = (data, filter) => {
       console.log('data', data);
-      console.log(
-        'data',
-        data.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado
-      );
-      return data.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado.toLowerCase().includes(
-        filter
-      );
+      console.log('data', data.idEstadoOrdenNavigation?.Estado);
+      return data.idEstadoOrdenNavigation?.estado
+        .toLowerCase()
+        .includes(filter);
     };
     this.dataSourceMobile.filterPredicate = (data, filter) => {
       console.log('data', data);
-      console.log(
-        'data',
-        data.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado
-      );
-      return data.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado.toLowerCase().includes(
-        filter
-      );
+      console.log('data', data.idEstadoOrdenNavigation?.Estado);
+      return data.idEstadoOrdenNavigation?.estado
+        .toLowerCase()
+        .includes(filter);
     };
   }
   ngAfterViewInit() {
@@ -254,19 +285,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'Proveedor':
-          return item.IdOrdenCompraNavigation?.IdProveedorNavigation?.Nombre;
+          return item.idProveedorNavigation?.nombre;
         case 'Forma de Pago':
-          return item.IdOrdenCompraNavigation?.IdFormaPagoNavigation?.Nombre;
+          return item.idFormaPagoNavigation?.nombre;
         case 'Forma de Envío':
-          return item.IdOrdenCompraNavigation?.IdFormaEnvioNavigation?.Nombre;
+          return item.idFormaEnvioNavigation?.nombre;
         case 'Monto Total':
-          return item.Precio;
+          return item.detalleOrdens[0]?.precio;
         case 'Fecha':
-          return item.IdOrdenCompraNavigation?.FechaRegistro;
-        case 'Producto':
-          return item.IdProductoNavigation?.Nombre;
+          return item.fechaRegistro;
         case 'Estado':
-          return item.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado;
+          return item.idEstadoOrdenNavigation?.estado;
 
         default:
           break;
@@ -278,19 +307,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dataSourceUsuario.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'Proveedor':
-          return item.IdOrdenCompraNavigation?.IdProveedorNavigation?.Nombre;
+          return item.idProveedorNavigation?.nombre;
         case 'Forma de Pago':
-          return item.IdOrdenCompraNavigation?.IdFormaPagoNavigation?.Nombre;
+          return item.idFormaPagoNavigation?.nombre;
         case 'Forma de Envío':
-          return item.IdOrdenCompraNavigation?.IdFormaEnvioNavigation?.Nombre;
+          return item.idFormaEnvioNavigation?.nombre;
         case 'Monto Total':
-          return item.Precio;
+          return item.detalleOrdens[0]?.precio;
         case 'Fecha':
-          return item.IdOrdenCompraNavigation?.FechaRegistro;
-        case 'Producto':
-          return item.IdProductoNavigation?.Nombre;
+          return item.fechaRegistro;
         case 'Estado':
-          return item.IdOrdenCompraNavigation?.IdEstadoOrdenNavigation?.Estado;
+          return item.idEstadoOrdenNavigation?.estado;
 
         default:
           break;
@@ -502,6 +529,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.tabla_M = true;
         this.tabla_PC = false;
       }
+    });
+  }
+  openDialogProductosOrdenCompra(producto: any) {
+    const dialogRef = this.dialog.open(OrdenCompraProductoComponent, {
+      data: { producto: producto },
     });
   }
 }

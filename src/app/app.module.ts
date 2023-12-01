@@ -1,3 +1,7 @@
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -105,6 +109,8 @@ import { ProveedorFormaPagoEliminarComponent } from './Components/Proveedor/Prov
 import { ProveedorFormaPagoListadoComponent } from './Components/Proveedor/ProveedorFormaPago/proveedor-forma-pago-listado/proveedor-forma-pago-listado.component';
 import { ProveedorFormaPagoModificarComponent } from './Components/Proveedor/ProveedorFormaPago/proveedor-forma-pago-modificar/proveedor-forma-pago-modificar.component';
 import { ProveedorFormaPagoAltaComponent } from './Components/Proveedor/ProveedorFormaPago/proveedor-forma-pago-alta/proveedor-forma-pago-alta.component';
+import { FormatoMonedaPipe } from './Pipes/formato-moneda.pipe';
+import { OrdenCompraProductoComponent } from './Components/Orden/orden-compra-producto/orden-compra-producto.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,6 +171,8 @@ import { ProveedorFormaPagoAltaComponent } from './Components/Proveedor/Proveedo
     ProveedorFormaPagoListadoComponent,
     ProveedorFormaPagoModificarComponent,
     ProveedorFormaPagoAltaComponent,
+    FormatoMonedaPipe,
+    OrdenCompraProductoComponent,
   ],
   imports: [
     LayoutModule,
@@ -221,7 +229,12 @@ import { ProveedorFormaPagoAltaComponent } from './Components/Proveedor/Proveedo
     },
     { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
     { provide: MAT_DIALOG_DATA, useValue: { id: null } },
+    { provide: LOCALE_ID, useValue: 'es-ES' },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    registerLocaleData(localeEs);
+  }
+}
